@@ -1,4 +1,5 @@
 ﻿using Rent.Domain.Abstractions.Entities;
+using Rent.Domain.Entities.Motorcycles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,14 @@ namespace Rent.Domain.Entities.MotorcycleRentals
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
         public DateTime ExpectedEndDate { get; private set; }
-        public int RentalPeriod { get; private set; }
+        public RentalPeriodEnum RentalPeriod { get; private set; }
         public decimal DailyRate { get; private set; }
         public decimal TotalCost { get; private set; }
         public bool IsDriverEligible { get; private set; }
 
-        public MotorcycleRental(DateTime creationDate, int rentalPeriod, bool isDriverEligible)
+        public MotorcycleRental(Guid motorcycleId, DateTime creationDate, RentalPeriodEnum rentalPeriod, bool isDriverEligible)
         {
+            MotorcycleId = motorcycleId;
             CreationDate = creationDate;
             StartDate = CreationDate.AddDays(1);
             RentalPeriod = rentalPeriod;
@@ -36,20 +38,34 @@ namespace Rent.Domain.Entities.MotorcycleRentals
             if (!IsDriverEligible)
                 Alert("Only drivers with category A license are eligible for rental.");
 
-            if (RentalPeriod == 7) DailyRate = 30.00m;
-            else if (RentalPeriod == 15) DailyRate = 28.00m;
-            else if (RentalPeriod == 30) DailyRate = 22.00m;
-            else if (RentalPeriod == 45) DailyRate = 20.00m;
-            else if (RentalPeriod == 50) DailyRate = 18.00m;
-            else 
-                Alert("Invalid rental period. Only specific plans are available.");
+            switch(RentalPeriod)
+            {
+                case RentalPeriodEnum._7:
+                    DailyRate = 30.00m;
+                    break;
+                case RentalPeriodEnum._15:
+                    DailyRate = 28.00m;
+                    break;
+                    case RentalPeriodEnum._30:
+                    DailyRate = 22.00m;
+                    break;
+                    case RentalPeriodEnum._45:
+                    DailyRate = 20.00m;
+                    break;
+                case RentalPeriodEnum._50:
+                    DailyRate = 18.00m;
+                    break;
+                default:
+                    Alert("Invalid rental period. Only specific plans are available.");
+                    break;
+            }
 
-            TotalCost = DailyRate * RentalPeriod;
+            TotalCost = DailyRate * (int)RentalPeriod;
         }
 
         private void SetEndDates()
         {
-            EndDate = StartDate.AddDays(RentalPeriod - 1);
+            EndDate = StartDate.AddDays((int)RentalPeriod - 1);
             ExpectedEndDate = EndDate;
         }
     }

@@ -13,6 +13,7 @@ namespace Rent.Domain.Entities.Users
         public string Email { get; private set; }
         public bool Admin { get; private set; }
         public bool DeliveryMan { get; set; }
+        public Guid? DeliveryManId { get; set; }
         public Guid UserExternalId { get; private set; }
     }
 }

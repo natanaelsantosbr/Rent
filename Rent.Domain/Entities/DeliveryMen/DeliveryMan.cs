@@ -69,5 +69,10 @@ namespace Rent.Domain.Entities.DeliveryMen
         {
             return true;   
         }
+
+        public bool CanRent()
+        {
+            return TypeCNH == CNHTypeEnum.A || TypeCNH == CNHTypeEnum.AB;
+        }
     }
 }
