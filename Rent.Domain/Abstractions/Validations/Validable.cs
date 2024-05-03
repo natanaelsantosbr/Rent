@@ -50,15 +50,5 @@ namespace Rent.Domain.Abstractions.Validations
                 Alert(critica);
         }
 
-        protected void ImportarAlertas(IEnumerable<IValidable> validaveis)
-        {
-            if (validaveis == null) return;
-
-            foreach (var validavel in validaveis)
-            {
-                foreach (var critica in validavel.Alerts)
-                    Alert(critica);
-            }
-        }
     }
 }

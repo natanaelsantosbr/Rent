@@ -10,6 +10,8 @@ namespace Rent.Domain.Entities.MotorcycleRentals
 {
     public class MotorcycleRental : BaseEntity
     {
+        protected MotorcycleRental() { }
+
         public Guid MotorcycleId { get; private set; }
         public Guid DeliveryManId { get; private set; }    
         public DateTime CreationDate { get; private set; }

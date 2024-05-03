@@ -1,0 +1,3 @@
+﻿//Acessar raiz do projeto pelo terminal PowerShell
+
+dotnet ef migrations add Initial --project Rent.Infra.Data --startup-project Rent.API

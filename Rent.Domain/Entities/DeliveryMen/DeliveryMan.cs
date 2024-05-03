@@ -9,20 +9,24 @@ namespace Rent.Domain.Entities.DeliveryMen
 {
     public class DeliveryMan : BaseEntity
     {
+        protected DeliveryMan() { }
+
         public string Name { get; private set; }
         public string CNPJ { get; private set; }
         public DateTime BirthDate { get; private set; }
         public string CNH { get; private set; }
         public CNHTypeEnum TypeCNH { get; private set; }
+        public string Email { get; private set; }
         public string CNHImagePath { get; private set; }
 
-        public DeliveryMan(string name, string cnpj, DateTime birthDate, string cnh, CNHTypeEnum typeCNH, string cnhImagePath)
+        public DeliveryMan(string name, string cnpj, DateTime birthDate, string cnh, CNHTypeEnum typeCNH, string email, string cnhImagePath)
         {
             Name = name;
             CNPJ = cnpj;
             BirthDate = birthDate;
             CNH = cnh;
             TypeCNH = typeCNH;
+            Email = email;
             CNHImagePath = cnhImagePath;
 
             Validate();

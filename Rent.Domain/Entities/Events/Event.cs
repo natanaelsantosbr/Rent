@@ -9,6 +9,7 @@ namespace Rent.Domain.Entities.Events
 {
     public class Event : BaseEntity
     {
+        protected Event() { }
         public Event(string details, DateTime createdAt)
         {
             Details = details;
