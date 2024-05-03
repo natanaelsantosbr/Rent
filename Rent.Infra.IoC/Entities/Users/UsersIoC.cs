@@ -46,8 +46,8 @@ namespace Rent.Infra.IoC.Entities.DeliveryMen
 
             User usuario = null;
 
-            usuario = usuarioRepository
-                    .Consultar().First();
+            //usuario = usuarioRepository
+            //        .Consultar().First();
 
             return usuario;
         }

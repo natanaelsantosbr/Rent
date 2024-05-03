@@ -23,19 +23,22 @@ namespace Rent.Application.AppServices.DeliveryMen
         {
             var repository = _unitOfWork.ObterRepository<DeliveryMan>();
 
-            if (await repository.ExisteAsync(x => x.CNPJ == dto.CNPJ))
+            var cnpjExists = await repository.ExisteAsync(x => x.CNPJ == dto.CNPJ);
+
+            if (cnpjExists)
             {
                 Alert("This CNPJ is already registered.");
                 return false;
             }
 
-            if (await repository.ExisteAsync(x => x.CNH == dto.CNH))
+            var cnhExists = await repository.ExisteAsync(x => x.CNH == dto.CNH);
+            if (cnhExists)
             {
                 Alert("This CNH number is already registered.");
                 return false;
             }
 
-            var cnhImagePath = await SaveCNHImageAsync(dto.CNHImage, dto.CNH + ".png");
+            var cnhImagePath = await SaveCNHImageAsync(dto.ImageCNH, dto.CNH + ".png");
 
             var deliveryMan = new DeliveryMan(dto.Name, dto.CNPJ, dto.BirthDate, dto.CNH, dto.TypeCNH, dto.Email, cnhImagePath);
 

@@ -37,7 +37,6 @@ namespace Rent.Application.AppServices.DeliveryMen
                 return;
             }
 
-            await repository.AdicionarAsync(deliveryMan);
             await _unitOfWork.CommitAsync();
             return;
         }

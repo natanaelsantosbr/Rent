@@ -1,12 +1,10 @@
-﻿using Rent.Domain.Abstractions.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Rent.Domain.Abstractions.Entities;
 using Rent.Domain.Abstractions.Repositories;
 using Rent.Infra.Data.Context;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Rent.Infra.Data.Abstractions
@@ -67,9 +65,9 @@ namespace Rent.Infra.Data.Abstractions
                    EqualityComparer<ApplicationDbContext>.Default.Equals(_db, repository._db);
         }
 
-        public Task<bool> ExisteAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<bool> ExisteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _db.Set<TEntity>().AnyAsync(predicate);
         }
     }
 }
