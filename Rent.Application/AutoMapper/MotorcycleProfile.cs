@@ -11,7 +11,7 @@ namespace Rent.Application.AutoMapper
 {
     public class MotorcycleProfile : Profile
     {
-        protected internal MotorcycleProfile(string profileName) : base(profileName)
+        public MotorcycleProfile()
         {
             CreateMap<Motorcycle, ListMotorcycleDTO>();
         }
