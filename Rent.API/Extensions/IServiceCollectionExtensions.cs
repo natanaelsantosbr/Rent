@@ -9,7 +9,7 @@ namespace Rent.API.Extensions
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerConfig();
 
             services.AddInjencaoDeDependenciaAPIIoC(configuration);
             services.AddAutoMapperConfig();

@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Rent.Application.Abstractions.AppServices.Accounts;
 using Rent.Application.Abstractions.AppServices.Users;
+using Rent.Application.AppServices.Accounts;
 using Rent.Application.AppServices.Users;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Users;
 using Rent.Domain.Services.Accounts;
 using Rent.Infra.Data.Identity.Services;
+using Rent.Infra.IoC.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +28,10 @@ namespace Rent.Infra.IoC.Entities.DeliveryMen
             services.AddScoped<IRegisterAdminService, RegisterAdminService>();
             services.AddScoped<IRegisterDeliveryManService, RegisterDeliveryManService>();
 
+            services.AddScoped<IAuthenticateAppService, AuthenticateAppService>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(serviceProvider => ObterUsuarioLogado(serviceProvider));
 
@@ -36,8 +43,8 @@ namespace Rent.Infra.IoC.Entities.DeliveryMen
             var httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
             var identificacao = httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(a => a.Type == ClaimTypes.NameIdentifier);
 
-            //if (identificacao == null)
-            //    return null;
+            if (identificacao == null)
+                return null;
 
             var scope = serviceProvider.CreateScope();
 
@@ -46,8 +53,8 @@ namespace Rent.Infra.IoC.Entities.DeliveryMen
 
             User usuario = null;
 
-            //usuario = usuarioRepository
-            //        .Consultar().First();
+            usuario = usuarioRepository
+                    .Consultar().FirstOrDefault(a => a.Id == Guid.Parse(identificacao.Value));
 
             return usuario;
         }

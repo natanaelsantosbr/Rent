@@ -33,7 +33,7 @@ namespace Rent.Application.AppServices.Users
             {
                 var userResult = await _registerDeliveryManService.Register(dto.Name, dto.Email, dto.Password);
 
-                if(userResult.Id.HasValue)
+                if(!userResult.Id.HasValue)
                 {
                     foreach (var message in userResult.Erros)
                     {
