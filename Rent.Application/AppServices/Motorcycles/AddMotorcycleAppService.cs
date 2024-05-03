@@ -18,14 +18,12 @@ namespace Rent.Application.AppServices.Motorcycles
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly User _user;
-        private readonly IMapper _mapper;
         private readonly IMessagePublisher _messagePublisher;
 
-        public AddMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMapper mapper, IMessagePublisher messagePublisher)
+        public AddMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMessagePublisher messagePublisher)
         {
             _unitOfWork = unitOfWork;
             _user = user;
-            _mapper = mapper;
             _messagePublisher = messagePublisher;
         }
 
