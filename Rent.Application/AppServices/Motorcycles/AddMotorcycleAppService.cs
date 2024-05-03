@@ -2,6 +2,7 @@
 using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
 using Rent.Application.DTOs.Motorcycles;
+using Rent.Application.MessagePublishers;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
@@ -18,12 +19,14 @@ namespace Rent.Application.AppServices.Motorcycles
         private readonly IUnitOfWork _unitOfWork;
         private readonly User _user;
         private readonly IMapper _mapper;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public AddMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMapper mapper)
+        public AddMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMapper mapper, IMessagePublisher messagePublisher)
         {
             _unitOfWork = unitOfWork;
             _user = user;
             _mapper = mapper;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task AddMotorcycleAsync(AddMotorcycleDTO dto)
@@ -58,7 +61,12 @@ namespace Rent.Application.AppServices.Motorcycles
 
             await motorcycleRepository.AdicionarAsync(motorcycle);
 
-            await _unitOfWork.CommitAsync();     
+            await _unitOfWork.CommitAsync();
+
+            await _messagePublisher.PublishAsync("motorcycle_registered", motorcycle);
+
+            if (motorcycle.Year == 2024)
+                await _messagePublisher.PublishAsync("motorcycle_2024_registered", motorcycle);
         }
     }
 }
