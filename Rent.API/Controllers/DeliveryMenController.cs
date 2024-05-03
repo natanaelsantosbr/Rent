@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Rent.API.Abstractions.Controllers;
 using Rent.API.DTOs;
 using Rent.Application.Abstractions.AppServices.DeliveryMen;
@@ -19,6 +20,7 @@ namespace Rent.API.Controllers
         }
 
         [HttpPost()]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterDeliveryManAsync([FromForm] CreateRegisterDeliveryManDTO model)
         {
             var dto = new RegisterDeliveryManDTO(

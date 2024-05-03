@@ -23,8 +23,9 @@ namespace Rent.Domain.Entities.MotorcycleRentals
         public decimal TotalCost { get; private set; }
         public bool IsDriverEligible { get; private set; }
 
-        public MotorcycleRental(Guid motorcycleId, DateTime creationDate, RentalPeriodEnum rentalPeriod, bool isDriverEligible)
+        public MotorcycleRental(Guid deliveryManId, Guid motorcycleId, DateTime creationDate, RentalPeriodEnum rentalPeriod, bool isDriverEligible)
         {
+            DeliveryManId = deliveryManId;
             MotorcycleId = motorcycleId;
             CreationDate = creationDate;
             StartDate = CreationDate.AddDays(1);

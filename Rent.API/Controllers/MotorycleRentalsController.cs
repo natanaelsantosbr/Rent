@@ -28,8 +28,8 @@ namespace Rent.API.Controllers
         }
 
 
-        [HttpGet("{rentalId}/calculate")]
-        public async Task<IActionResult> CalculateReturnCostAsync([FromRoute] Guid rentalId, [FromBody] DateTime returnDate)
+        [HttpGet("{rentalId}/calculate/{returnDate}")]
+        public async Task<IActionResult> CalculateReturnCostAsync([FromRoute] Guid rentalId, [FromRoute] DateTime returnDate)
         {
             var result = await _calculateReturnCostAppService.CalculeReturnCostAsync(rentalId, returnDate);
 

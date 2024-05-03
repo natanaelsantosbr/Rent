@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Rent.Domain\Rent.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

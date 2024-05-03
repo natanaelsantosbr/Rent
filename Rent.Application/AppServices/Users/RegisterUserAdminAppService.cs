@@ -29,17 +29,17 @@ namespace Rent.Application.AppServices.Users
 
         public async Task Register(RegisterAdminDTO dto)
         {
-            if (_user == null)
-            {
-                Alert("user not found");
-                return;
-            }
+            //if (_user == null)
+            //{
+            //    Alert("user not found");
+            //    return;
+            //}
 
-            if (!_user.Admin)
-            {
-                Alert("Only admin users can perform this action.");
-                return;
-            }
+            //if (!_user.Admin)
+            //{
+            //    Alert("Only admin users can perform this action.");
+            //    return;
+            //}
 
             var userExternalId = Guid.Empty;
 
@@ -47,7 +47,7 @@ namespace Rent.Application.AppServices.Users
             {
                 var userResult = await _registerAdminService.Register(dto.Name, dto.Email, dto.Password);
 
-                if(userResult.Id.HasValue)
+                if(!userResult.Id.HasValue)
                 {
                     foreach (var message in userResult.Erros)
                     {

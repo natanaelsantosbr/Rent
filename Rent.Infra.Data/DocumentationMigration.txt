@@ -5,3 +5,8 @@ dotnet ef migrations add Initial --project Rent.Infra.Data --startup-project Ren
 
 //Atualizar o banco de dados
 dotnet ef database update --project Rent.Infra.Data --startup-project Rent.API
+
+
+//Senha do admin
+e-mail: admin@gmail.com
+senha: Admin@10

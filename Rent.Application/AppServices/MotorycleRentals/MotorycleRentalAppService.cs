@@ -55,7 +55,7 @@ namespace Rent.Application.Abstractions.AppServices.MotorycleRentals
                 return;
             }
 
-            var rental = new MotorcycleRental(dto.MotorcycleId, dto.CreationDate, dto.RentalPeriod, deliveryMan.CanRent());
+            var rental = new MotorcycleRental(_user.DeliveryManId.Value, dto.MotorcycleId, dto.CreationDate, dto.RentalPeriod, deliveryMan.CanRent());
 
             if(rental.Invalid)
             {
