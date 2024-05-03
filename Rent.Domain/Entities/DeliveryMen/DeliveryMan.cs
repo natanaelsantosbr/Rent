@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rent.Domain.Entities.DeliveryMans
+namespace Rent.Domain.Entities.DeliveryMen
 {
     public class DeliveryMan : BaseEntity
     {
-        public string Identifier { get; private set; }
         public string Name { get; private set; }
         public string CNPJ { get; private set; }
         public DateTime BirthDate { get; private set; }
@@ -17,30 +16,19 @@ namespace Rent.Domain.Entities.DeliveryMans
         public CNHTypeEnum TypeCNH { get; private set; }
         public string CNHImagePath { get; private set; }
 
-        private static List<string> RegisteredCNPJs = new List<string>();
-        private static List<string> RegisteredCNHNumbers = new List<string>();
-
-        public DeliveryMan(string identifier, string name, string cnpj, DateTime birthDate, string cnh, CNHTypeEnum typeCNH, string urlImageCNH)
+        public DeliveryMan(string name, string cnpj, DateTime birthDate, string cnh, CNHTypeEnum typeCNH, string cnhImagePath)
         {
-            if (RegisteredCNPJs.Contains(cnpj))
-                Alert("CNPJ já está registrado.");
-
-            if (RegisteredCNHNumbers.Contains(cnh))
-                Alert("Número da CNH já está registrado.");
-
-            Identifier = identifier;
             Name = name;
             CNPJ = cnpj;
             BirthDate = birthDate;
             CNH = cnh;
             TypeCNH = typeCNH;
-            CNHImagePath = urlImageCNH;
+            CNHImagePath = cnhImagePath;
 
-            RegisteredCNPJs.Add(CNPJ);
-            RegisteredCNHNumbers.Add(CNH);
+            Validate();
         }
 
-        public void ChangeUrlImageCNH(string imagePath)
+        public void UpdateCNHImagePath(string imagePath)
         {
             ValidateImageFormat(imagePath);
 
@@ -60,6 +48,26 @@ namespace Rent.Domain.Entities.DeliveryMans
         public static bool ValidateCNHType(CNHTypeEnum type)
         {
             return type == CNHTypeEnum.A || type == CNHTypeEnum.B || type == CNHTypeEnum.AB;
+        }
+
+        private void Validate()
+        {
+            if (string.IsNullOrEmpty(Name))
+                Alert("Name is required.");
+
+            if (string.IsNullOrEmpty(CNPJ) || !IsValidCNPJ(CNPJ))
+                Alert("A valid CNPJ is required.");
+
+            if (string.IsNullOrEmpty(CNH))
+                Alert("CNH number is required.");
+
+            if ((TypeCNH != CNHTypeEnum.A && TypeCNH != CNHTypeEnum.B && TypeCNH != CNHTypeEnum.AB))
+                Alert("Type CNH must be 'A', 'B', or 'A+B'.");
+        }
+
+        private bool IsValidCNPJ(string cnpj)
+        {
+            return true;   
         }
     }
 }

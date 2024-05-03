@@ -1,4 +1,4 @@
-﻿namespace Rent.Domain.Entities.DeliveryMans
+﻿namespace Rent.Domain.Entities.DeliveryMen
 {
     public enum CNHTypeEnum
     {
