@@ -2,10 +2,10 @@
 using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
 using Rent.Application.DTOs.Motorcycles;
-using Rent.Application.MessagePublishers;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
+using Rent.Domain.MessagePublishers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

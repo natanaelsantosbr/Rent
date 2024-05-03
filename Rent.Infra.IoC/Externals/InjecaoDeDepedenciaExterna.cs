@@ -14,6 +14,7 @@ namespace Rent.Infra.IoC.Externals
         {
             services.AddDatabaseIoC(configuration);
             services.AddIdentityIoC(configuration);
+            services.AddMessageIoC(configuration);
 
             return services;
         }

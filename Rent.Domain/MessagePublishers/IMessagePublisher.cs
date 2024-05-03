@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rent.Application.MessagePublishers
+namespace Rent.Domain.MessagePublishers
 {
     public interface IMessagePublisher
     {

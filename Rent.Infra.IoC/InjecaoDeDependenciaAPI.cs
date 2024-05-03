@@ -16,7 +16,7 @@ namespace Rent.Infra.IoC
         {
             services.AddInjecaoDeDendenciaRegraNegocioIoC(configuration);
             services.AddInjecaoDeDependenciaExternaIoC(configuration);
-            services.AddJWTIoC(configuration);
+            //services.AddJWTIoC(configuration);
             return services;
         }
     }
