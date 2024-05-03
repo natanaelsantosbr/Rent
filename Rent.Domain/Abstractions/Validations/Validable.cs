@@ -1,4 +1,5 @@
 ﻿using Flunt.Notifications;
+using Flunt.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,14 +27,14 @@ namespace Rent.Domain.Abstractions.Validations
 
         protected void Alert(string critica)
         {
-            if (string.IsNullOrEmpty(critica)) return;
+            if (String.IsNullOrEmpty(critica)) return;
 
             var novaLista = Alerts.ToList();
             novaLista.Add(critica);
             Alerts = novaLista;
         }
 
-        protected void ImportAlerts(Notifiable<Notification> notifiable)
+        protected void ImportAlerts(Notifiable notifiable)
         {
             if (notifiable == null || notifiable.Notifications == null) return;
 
@@ -41,7 +42,7 @@ namespace Rent.Domain.Abstractions.Validations
                 Alert(notificacao.Message);
         }
 
-        protected void ImportarAlerts(IValidable validavel)
+        protected void ImportAlerts(IValidable validavel)
         {
             if (validavel == null || validavel.Alerts == null) return;
 
@@ -49,7 +50,7 @@ namespace Rent.Domain.Abstractions.Validations
                 Alert(critica);
         }
 
-        protected void ImportarAlerts(IEnumerable<IValidable> validaveis)
+        protected void ImportarAlertas(IEnumerable<IValidable> validaveis)
         {
             if (validaveis == null) return;
 

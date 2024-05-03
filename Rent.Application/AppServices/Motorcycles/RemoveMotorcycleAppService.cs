@@ -43,7 +43,7 @@ namespace Rent.Application.AppServices.Motorcycles
 
             var motorcycle = await motorcycleRepository.ExisteAsync(a => a.Id == motorcycleId);
 
-            if(motorcycle == null)
+            if (!motorcycle)
             {
                 Alert("Motorcycle not found");
                 return;

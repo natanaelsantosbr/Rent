@@ -12,19 +12,19 @@ namespace Rent.Domain.Entities.Motorcycles
         public string Identifier { get; private set; }
         public string Model { get; private set; }
         public int Year { get; private set; }
-        public string VIN { get; private set; } // Vehicle Identification Number
+        public string LicensePlate { get; private set; }
 
-        public Motorcycle(string identifier, string model, int year, string vin)
+        public Motorcycle(string identifier, string model, int year, string licensePlate)
         {
             Identifier = identifier;
             Model = model;
             Year = year;
-            VIN = vin;
+            LicensePlate = licensePlate;
         }
 
-        public void ChangeVIN(string vin)
+        public void UpdateLicensePlate(string licensePlate)
         {
-            VIN = vin;
+            LicensePlate = licensePlate;
         }
     }
 }
