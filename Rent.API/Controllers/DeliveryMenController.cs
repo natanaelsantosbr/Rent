@@ -17,7 +17,7 @@ namespace Rent.API.Controllers
             _updateCNHAppService = updateCNHAppService;
         }
 
-        [HttpPost]
+        [HttpPost()]
         public async Task<IActionResult> RegisterDeliveryManAsync([FromBody] RegisterDeliveryManDTO dto)
         {
             var result = await _registerDeliveryManAppService.RegisterDeliveryManAsync(dto);
@@ -28,7 +28,7 @@ namespace Rent.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("{deliveryMenId}")]
+        [HttpPut("{deliveryMenId}/update-cnh")]
         public async Task<IActionResult> UpdateCNHAsync([FromRoute] Guid deliveryMenId, [FromForm] IFormFile file)
         {
             if (file == null || file.Length == 0)

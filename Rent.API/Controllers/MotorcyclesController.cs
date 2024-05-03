@@ -21,7 +21,7 @@ namespace Rent.API.Controllers
             _updateLicensePlateAppService = updateLicensePlateAppService;
         }
 
-        [HttpPost]
+        [HttpPost()]
         public async Task<IActionResult> AddMotorcycleAsync([FromBody] AddMotorcycleDTO dto)
         {
             await _addMotorcycleAppService.AddMotorcycleAsync(dto);
@@ -32,7 +32,7 @@ namespace Rent.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet()]
         public IActionResult GetMotorcyclesAsync([FromQuery] string? licensePlate)
         {
             var result = _getMotorcycleAppService.GetMotorcycleByLicensePlateAsync(licensePlate);
@@ -54,7 +54,7 @@ namespace Rent.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{motorcycleId}")]
+        [HttpPut("{motorcycleId}/update-license-plate")]
         public async Task<IActionResult> UpdateLicensePlateAsync([FromRoute] Guid motorcycleId, [FromBody] string licensePlate)
         {
             await _updateLicensePlateAppService.UpdateLicensePlateAppAsync(motorcycleId, licensePlate);
