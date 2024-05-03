@@ -6,7 +6,6 @@ using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,43 +13,52 @@ using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.Motorcycles
 {
-    public class GetMotorcycleAppService : AppService, IGetMotorcycleAppService
+    public class AddMotorcycleAppService : AppService, IAddMotorcycleAppService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly User _user;
         private readonly IMapper _mapper;
 
-        public GetMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMapper mapper)
+        public AddMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _user = user;
             _mapper = mapper;
         }
 
-        public ICollection<ListMotorcycleDTO> GetMotorcycleByLicensePlateAsync(string? licensePlate)
+        public async Task AddMotorcycleAsync(AddMotorcycleDTO dto)
         {
             if (_user == null)
             {
                 Alert("User not found");
-                return null;
+                return;
             }
 
             if (!_user.Admin)
             {
                 Alert("Only admin users can perform this action.");
-                return null;
+                return;
             }
 
             var motorcycleRepository = _unitOfWork.ObterRepository<Motorcycle>();
 
-            var list = motorcycleRepository.Consultar();
+            if (await motorcycleRepository.ExisteAsync(m => m.LicensePlate == dto.LicensePlate))
+            {
+                Alert("License plate already exists.");
+                return;
+            }
 
-            if(licensePlate != null)
-                list = list.Where(a => a.LicensePlate.Contains(licensePlate));
+            var motorcycle = new Motorcycle(dto.Model, dto.Year, dto.LicensePlate);
 
-            var dtos = _mapper.Map<ICollection<ListMotorcycleDTO>>(list);
+            if (motorcycle.Invalid)
+            {
+                ImportAlerts(motorcycle);
+                return;
+            }
 
-            return dtos;
+            await motorcycleRepository.AdicionarAsync(motorcycle);
+
+            await _unitOfWork.CommitAsync();     
         }
     }
 }

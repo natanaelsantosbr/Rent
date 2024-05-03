@@ -46,6 +46,14 @@ namespace Rent.Application.AppServices.Motorcycles
                 return false;
             }
 
+            var isLicensePlateInUse = await motorcycleRepository.ExisteAsync(a => a.LicensePlate == licensePlate);
+
+            if(isLicensePlateInUse)
+            {
+                Alert("License plate already in use.");
+                return false;
+            }
+
             motorcycle.UpdateLicensePlate(licensePlate);
 
             if(motorcycle.Invalid)

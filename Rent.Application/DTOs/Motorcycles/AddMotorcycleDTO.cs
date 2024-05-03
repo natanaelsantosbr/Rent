@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rent.Application.DTOs.Motorcycles
 {
-    public class ListMotorcycleDTO
+    public class AddMotorcycleDTO
     {
         public string Model { get; set; }
         public int Year { get; set; }
