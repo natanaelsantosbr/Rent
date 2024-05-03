@@ -68,5 +68,26 @@ namespace Rent.Domain.Entities.MotorcycleRentals
             EndDate = StartDate.AddDays((int)RentalPeriod - 1);
             ExpectedEndDate = EndDate;
         }
+
+        public decimal CalculateReturnCost(DateTime returnDate)
+        {
+            int daysLate = (returnDate - ExpectedEndDate).Days;
+            if (daysLate > 0)
+            {
+                return TotalCost + (50m * daysLate);
+            }
+            else if (daysLate < 0)
+            {
+                int daysEarly = -daysLate;
+                decimal penaltyRate = 0;
+                if (RentalPeriod ==  RentalPeriodEnum._7) penaltyRate = 0.20m;
+                else if (RentalPeriod ==  RentalPeriodEnum._15) penaltyRate = 0.40m;
+
+                decimal penalty = (DailyRate * daysEarly) * penaltyRate;
+                return TotalCost - penalty;
+            }
+
+            return TotalCost; 
+        }
     }
 }
