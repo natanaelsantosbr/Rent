@@ -9,12 +9,7 @@ using Rent.Domain.Entities.Users;
 using Rent.Domain.Services.Accounts;
 using Rent.Infra.Data.Identity.Services;
 using Rent.Infra.IoC.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Infra.IoC.Entities.DeliveryMen
 {
@@ -54,7 +49,7 @@ namespace Rent.Infra.IoC.Entities.DeliveryMen
             User usuario = null;
 
             usuario = usuarioRepository
-                    .Consultar().FirstOrDefault(a => a.Id == Guid.Parse(identificacao.Value));
+                    .Query().FirstOrDefault(a => a.Id == Guid.Parse(identificacao.Value));
 
             return usuario;
         }

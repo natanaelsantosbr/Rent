@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Rent.Domain.Services.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Infra.Data.Identity.Services
 {
@@ -17,7 +12,7 @@ namespace Rent.Infra.Data.Identity.Services
             _signInManager = signInManager;
         }
 
-        public async Task<bool> Authenticate(string email, string password)
+        public async Task<bool> AuthenticateAsync(string email, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
             return result.Succeeded;

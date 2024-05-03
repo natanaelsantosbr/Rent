@@ -2,11 +2,6 @@
 using Rent.Application.Abstractions.AppServices.MotorycleRentals;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.MotorcycleRentals;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.MotorycleRentals
 {
@@ -23,7 +18,7 @@ namespace Rent.Application.AppServices.MotorycleRentals
         {
             var _rentalRepository = _unitOfWork.ObterRepository<MotorcycleRental>();
 
-            var rental = await _rentalRepository.ConsultarPorIdAsync(rentalId);
+            var rental = await _rentalRepository.GetByIdAsync(rentalId);
 
             if (rental == null)
             {

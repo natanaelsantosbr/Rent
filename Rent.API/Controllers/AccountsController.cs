@@ -23,7 +23,7 @@ namespace Rent.API.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<UserToken>> Post([FromBody] LoginDTO model)
         {
-            var result = await _authenticateAppService.Authenticate(model.Email, model.Password);
+            var result = await _authenticateAppService.AuthenticateAsync(model.Email, model.Password);
 
             if (_authenticateAppService.Invalid)
                 return BadRequest(_authenticateAppService.Alerts);
@@ -35,7 +35,7 @@ namespace Rent.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminDTO dto)
         {
-            await _registerUserAdminAppService.Register(dto);
+            await _registerUserAdminAppService.RegisterAsync(dto);
 
             if (_registerUserAdminAppService.Invalid)
                 return BadRequest(_registerUserAdminAppService.Alerts);

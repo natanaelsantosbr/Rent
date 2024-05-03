@@ -1,15 +1,9 @@
 ﻿using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
-using Rent.Domain.Abstractions.Messages;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.MotorcycleRentals;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.Motorcycles
 {
@@ -41,7 +35,7 @@ namespace Rent.Application.AppServices.Motorcycles
 
             var motorcycleRepository = _unitOfWork.ObterRepository<Motorcycle>();
 
-            var motorcycle = await motorcycleRepository.ExisteAsync(a => a.Id == motorcycleId);
+            var motorcycle = await motorcycleRepository.ExistsAsync(a => a.Id == motorcycleId);
 
             if (!motorcycle)
             {
@@ -51,7 +45,7 @@ namespace Rent.Application.AppServices.Motorcycles
 
             var motorcycleRentalRepository = _unitOfWork.ObterRepository<MotorcycleRental>();
 
-            var rental = await motorcycleRentalRepository.ExisteAsync(a => a.MotorcycleId == motorcycleId);
+            var rental = await motorcycleRentalRepository.ExistsAsync(a => a.MotorcycleId == motorcycleId);
 
             if (rental)
             {
@@ -59,7 +53,7 @@ namespace Rent.Application.AppServices.Motorcycles
                 return;
             }
 
-            await motorcycleRepository.ExcluirAsync(motorcycleId);
+            await motorcycleRepository.DeleteAsync(motorcycleId);
             await _unitOfWork.CommitAsync();
         }
     }

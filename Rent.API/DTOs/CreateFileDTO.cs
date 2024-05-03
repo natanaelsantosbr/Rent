@@ -1,6 +1,4 @@
-﻿using Rent.Domain.Entities.DeliveryMen;
-
-namespace Rent.API.DTOs
+﻿namespace Rent.API.DTOs
 {
     public class CreateFileDTO
     {

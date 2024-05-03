@@ -28,7 +28,7 @@ namespace Rent.Infra.Data.Consumers
 
             var eventRepository = _unitOfWork.ObterRepository<Event>();
 
-            await eventRepository.AdicionarAsync(@event);
+            await eventRepository.AddAsync(@event);
 
             await _unitOfWork.CommitAsync();
         }

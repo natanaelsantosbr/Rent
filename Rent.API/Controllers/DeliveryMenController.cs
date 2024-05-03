@@ -4,7 +4,6 @@ using Rent.API.Abstractions.Controllers;
 using Rent.API.DTOs;
 using Rent.Application.Abstractions.AppServices.DeliveryMen;
 using Rent.Application.DTOs.DeliveryMen;
-using Rent.Infra.IoC.Entities.DeliveryMen;
 
 namespace Rent.API.Controllers
 {
@@ -51,7 +50,7 @@ namespace Rent.API.Controllers
 
             try
             {
-                await _updateCNHAppService.UpdateCNHAsync(deliveryMenId, dto.ConvertFormFileToByteArray(dto.File));
+                await _updateCNHAppService.UpdateCNHAsync(dto.ConvertFormFileToByteArray(dto.File));
 
                 if (_updateCNHAppService.Invalid)
                     return BadRequest(_updateCNHAppService.Alerts);

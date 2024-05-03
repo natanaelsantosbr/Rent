@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Rent.Infra.IoC
 {
-    public static class InjecaoDeDependenciaAPI
+    public static class APIDependencyInjection
     {
-        public static IServiceCollection AddInjencaoDeDependenciaAPIIoC(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAPIDependencyInjectionIoC(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddInjecaoDeDendenciaRegraNegocioIoC(configuration);
-            services.AddInjecaoDeDependenciaExternaIoC(configuration);
+            services.AddBusinessRuleDependencyInjectionIoC(configuration);
+            services.AddExternalDependencyInjectionIoC(configuration);
             services.AddJwtAuthentication(configuration);
             return services;
         }

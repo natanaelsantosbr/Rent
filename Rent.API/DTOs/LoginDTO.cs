@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Rent.API.DTOs
+﻿namespace Rent.API.DTOs
 {
     public class LoginDTO
     {

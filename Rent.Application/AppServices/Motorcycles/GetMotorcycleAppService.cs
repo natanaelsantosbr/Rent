@@ -5,12 +5,6 @@ using Rent.Application.DTOs.Motorcycles;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.Motorcycles
 {
@@ -43,7 +37,7 @@ namespace Rent.Application.AppServices.Motorcycles
 
             var motorcycleRepository = _unitOfWork.ObterRepository<Motorcycle>();
 
-            var list = motorcycleRepository.Consultar();
+            var list = motorcycleRepository.Query();
 
             if(licensePlate != null)
                 list = list.Where(a => a.LicensePlate.Contains(licensePlate));

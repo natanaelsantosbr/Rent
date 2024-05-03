@@ -1,15 +1,8 @@
-﻿using Rent.Application.Abstractions;
-using Rent.Application.DTOs.MotorycleRentals;
+﻿using Rent.Application.DTOs.MotorycleRentals;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.DeliveryMen;
 using Rent.Domain.Entities.MotorcycleRentals;
-using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.Abstractions.AppServices.MotorycleRentals
 {
@@ -41,7 +34,7 @@ namespace Rent.Application.Abstractions.AppServices.MotorycleRentals
 
             var deliveryManRepository = _unitOfWork.ObterRepository<DeliveryMan>();
 
-            var deliveryMan = await deliveryManRepository.ConsultarPorIdAsync(_user.DeliveryManId.Value);
+            var deliveryMan = await deliveryManRepository.GetByIdAsync(_user.DeliveryManId.Value);
 
             if (deliveryMan == null)
             { 
@@ -64,7 +57,7 @@ namespace Rent.Application.Abstractions.AppServices.MotorycleRentals
             }
 
             var motorcycleRentalRepository = _unitOfWork.ObterRepository<MotorcycleRental>();   
-            await motorcycleRentalRepository.AdicionarAsync(rental);
+            await motorcycleRentalRepository.AddAsync(rental);
             await _unitOfWork.CommitAsync();
 
 

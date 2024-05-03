@@ -1,33 +1,27 @@
-﻿using AutoMapper;
-using Rent.Application.Abstractions;
+﻿using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
 using Rent.Application.DTOs.Motorcycles;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
 using Rent.Domain.MessagePublishers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.Motorcycles
 {
-    public class AddMotorcycleAppService : AppService, IAddMotorcycleAppService
+    public class RegisterMotorcycleAppService : AppService, IRegisterMotorcycleAppService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly User _user;
         private readonly IMessagePublisher _messagePublisher;
 
-        public AddMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMessagePublisher messagePublisher)
+        public RegisterMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMessagePublisher messagePublisher)
         {
             _unitOfWork = unitOfWork;
             _user = user;
             _messagePublisher = messagePublisher;
         }
 
-        public async Task AddMotorcycleAsync(AddMotorcycleDTO dto)
+        public async Task RegisterAsync(AddMotorcycleDTO dto)
         {
             if (_user == null)
             {
@@ -43,7 +37,7 @@ namespace Rent.Application.AppServices.Motorcycles
 
             var motorcycleRepository = _unitOfWork.ObterRepository<Motorcycle>();
 
-            if (await motorcycleRepository.ExisteAsync(m => m.LicensePlate == dto.LicensePlate))
+            if (await motorcycleRepository.ExistsAsync(m => m.LicensePlate == dto.LicensePlate))
             {
                 Alert("License plate already exists.");
                 return;
@@ -57,7 +51,7 @@ namespace Rent.Application.AppServices.Motorcycles
                 return;
             }
 
-            await motorcycleRepository.AdicionarAsync(motorcycle);
+            await motorcycleRepository.AddAsync(motorcycle);
 
             await _unitOfWork.CommitAsync();
 

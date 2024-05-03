@@ -2,13 +2,8 @@
 using Rent.Domain.Abstractions.Repositories;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Infra.Data.Context;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Infra.Data.UnitsOfWork
 {

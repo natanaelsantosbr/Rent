@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace Rent.Domain.Services.Accounts
 {
-    public class UserResult
+    public class UserResultDTO
     {
-        public UserResult()
+        public UserResultDTO()
         {
             this.Erros = new List<string>();
         }
 
-        public UserResult(Guid? id) : this()
+        public UserResultDTO(Guid? id) : this()
         {
             Id = id;
         }
 
-        public UserResult(IEnumerable<string> erros) : this()
+        public UserResultDTO(IEnumerable<string> erros) : this()
         {
             Erros = erros;
         }

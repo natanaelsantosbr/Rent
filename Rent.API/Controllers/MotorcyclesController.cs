@@ -7,13 +7,13 @@ namespace Rent.API.Controllers
 {
     public class MotorcyclesController : RentController
     {
-        private readonly IAddMotorcycleAppService _addMotorcycleAppService;
+        private readonly IRegisterMotorcycleAppService _addMotorcycleAppService;
         private readonly IGetMotorcycleAppService _getMotorcycleAppService;
         private readonly IRemoveMotorcycleAppService _removeMotorcycleAppService;
         private readonly IUpdateLicensePlateAppService _updateLicensePlateAppService;
 
 
-        public MotorcyclesController(IAddMotorcycleAppService addMotorcycleAppService, IGetMotorcycleAppService getMotorcycleAppService, IRemoveMotorcycleAppService removeMotorcycleAppService, IUpdateLicensePlateAppService updateLicensePlateAppService)
+        public MotorcyclesController(IRegisterMotorcycleAppService addMotorcycleAppService, IGetMotorcycleAppService getMotorcycleAppService, IRemoveMotorcycleAppService removeMotorcycleAppService, IUpdateLicensePlateAppService updateLicensePlateAppService)
         {
             _addMotorcycleAppService = addMotorcycleAppService;
             _getMotorcycleAppService = getMotorcycleAppService;
@@ -24,7 +24,7 @@ namespace Rent.API.Controllers
         [HttpPost()]
         public async Task<IActionResult> AddMotorcycleAsync([FromBody] AddMotorcycleDTO dto)
         {
-            await _addMotorcycleAppService.AddMotorcycleAsync(dto);
+            await _addMotorcycleAppService.RegisterAsync(dto);
 
             if (_addMotorcycleAppService.Invalid)
                 return BadRequest(_addMotorcycleAppService.Alerts);

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Rent.Infra.IoC.Entities
 {
-    public static class InjecaoDeDependenciaRegraNegocio
+    public static class BusinessRuleDependencyInjection
     {
-        public static IServiceCollection AddInjecaoDeDendenciaRegraNegocioIoC(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddBusinessRuleDependencyInjectionIoC(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDeliveryMenIoC();
             services.AddEventsIoC();

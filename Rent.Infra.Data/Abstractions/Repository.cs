@@ -2,15 +2,11 @@
 using Rent.Domain.Abstractions.Entities;
 using Rent.Domain.Abstractions.Repositories;
 using Rent.Infra.Data.Context;
-using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Rent.Infra.Data.Abstractions
 {
-    public abstract class Repository<TEntity> : IRepository<TEntity>
-        where TEntity : BaseEntity
+    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly ApplicationDbContext _db;
 
@@ -19,9 +15,9 @@ namespace Rent.Infra.Data.Abstractions
             _db = db;
         }
 
-        public virtual async Task AdicionarAsync(TEntity entity) => await _db.Set<TEntity>().AddAsync(entity);
+        public virtual async Task AddAsync(TEntity entity) => await _db.Set<TEntity>().AddAsync(entity);
 
-        public virtual Task AlterarAsync(TEntity entity)
+        public virtual Task UpdateAsync(TEntity entity)
         {
             _db.Set<TEntity>().Update(entity);
             return Task.CompletedTask;
@@ -32,30 +28,30 @@ namespace Rent.Infra.Data.Abstractions
             _db.ChangeTracker.LazyLoadingEnabled = ativar;
         }
 
-        public virtual IQueryable<TEntity> Consultar() => _db.Set<TEntity>().AsQueryable();
+        public virtual IQueryable<TEntity> Query() => _db.Set<TEntity>().AsQueryable();
 
-        public virtual Task<TEntity> ConsultarPorIdAsync(Guid id) => _db.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
+        public virtual Task<TEntity> GetByIdAsync(Guid id) => _db.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
 
-        public virtual async Task ExcluirAsync(Guid id)
+        public virtual async Task DeleteAsync(Guid id)
         {
-            var entidade = await ConsultarPorIdAsync(id);
+            var entidade = await GetByIdAsync(id);
             _db.Set<TEntity>().Remove(entidade);
         }
 
-        public virtual async Task ExcluirAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var itens = Consultar().Where(predicate);
+            var itens = Query().Where(predicate);
             _db.Set<TEntity>().RemoveRange(itens);
         }
 
-        public virtual IQueryable<TEntity> ConsultarComIncludes()
+        public virtual IQueryable<TEntity> QueryWithIncludes()
         {
-            return Consultar();
+            return Query();
         }
 
-        public virtual Task<TEntity> ConsultarPorIdComIncludesAsync(Guid id)
+        public virtual Task<TEntity> GetByIdWithIncludesAsync(Guid id)
         {
-            return ConsultarComIncludes()
+            return QueryWithIncludes()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
@@ -65,7 +61,7 @@ namespace Rent.Infra.Data.Abstractions
                    EqualityComparer<ApplicationDbContext>.Default.Equals(_db, repository._db);
         }
 
-        public async Task<bool> ExisteAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _db.Set<TEntity>().AnyAsync(predicate);
         }

@@ -4,12 +4,6 @@ using Rent.Application.DTOs.Accounts;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Users;
 using Rent.Domain.Services.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.Accounts
 {
@@ -26,9 +20,9 @@ namespace Rent.Application.AppServices.Accounts
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserTokenDTO> Authenticate(string email, string password)
+        public async Task<UserTokenDTO> AuthenticateAsync(string email, string password)
         {
-            var result = await _authenticateService.Authenticate(email, password);
+            var result = await _authenticateService.AuthenticateAsync(email, password);
 
             if (!result)
             {
@@ -38,7 +32,7 @@ namespace Rent.Application.AppServices.Accounts
 
             var userRepository = _unitOfWork.ObterRepository<User>();
 
-            var user = userRepository.Consultar().FirstOrDefault(a => a.Email == email);
+            var user = userRepository.Query().FirstOrDefault(a => a.Email == email);
 
             if (user == null)
             {

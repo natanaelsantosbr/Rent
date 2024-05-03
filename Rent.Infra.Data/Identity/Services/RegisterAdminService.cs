@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Rent.Domain.Entities.Users;
 using Rent.Domain.Services.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Infra.Data.Identity.Services
 {
@@ -21,7 +16,7 @@ namespace Rent.Infra.Data.Identity.Services
             _signInManager = signInManager;
         }
 
-        public async Task<UserResult> Register(string name, string email, string password)
+        public async Task<UserResultDTO> RegisterAsync(string name, string email, string password)
         {
             var user = new ApplicationUser
             {
@@ -37,8 +32,8 @@ namespace Rent.Infra.Data.Identity.Services
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, TypeUser.Admin);
-                return new UserResult(Guid.Parse(user.Id));
+                await _userManager.AddToRoleAsync(user, UserType.Admin);
+                return new UserResultDTO(Guid.Parse(user.Id));
             }
 
             var listaErros = new List<string>();
@@ -48,7 +43,7 @@ namespace Rent.Infra.Data.Identity.Services
                 listaErros.Add(item.Description);
             }
 
-            return new UserResult(listaErros);
+            return new UserResultDTO(listaErros);
         }
     }
 }

@@ -1,16 +1,9 @@
 ﻿using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Users;
 using Rent.Application.DTOs.Users;
-using Rent.Domain.Abstractions.Messages;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Users;
 using Rent.Domain.Services.Accounts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Application.AppServices.Users
 {
@@ -27,25 +20,25 @@ namespace Rent.Application.AppServices.Users
             _user = user;
         }
 
-        public async Task Register(RegisterAdminDTO dto)
+        public async Task RegisterAsync(RegisterAdminDTO dto)
         {
-            //if (_user == null)
-            //{
-            //    Alert("user not found");
-            //    return;
-            //}
+            if (_user == null)
+            {
+                Alert("user not found");
+                return;
+            }
 
-            //if (!_user.Admin)
-            //{
-            //    Alert("Only admin users can perform this action.");
-            //    return;
-            //}
+            if (!_user.Admin)
+            {
+                Alert("Only admin users can perform this action.");
+                return;
+            }
 
             var userExternalId = Guid.Empty;
 
             try
             {
-                var userResult = await _registerAdminService.Register(dto.Name, dto.Email, dto.Password);
+                var userResult = await _registerAdminService.RegisterAsync(dto.Name, dto.Email, dto.Password);
 
                 if(!userResult.Id.HasValue)
                 {
@@ -63,7 +56,7 @@ namespace Rent.Application.AppServices.Users
 
                 var userRepository = _unitOfWork.ObterRepository<User>();
 
-                var existUser = await userRepository.ExisteAsync(a => a.Email == dto.Email);
+                var existUser = await userRepository.ExistsAsync(a => a.Email == dto.Email);
 
                 if (existUser)
                 {
@@ -77,7 +70,7 @@ namespace Rent.Application.AppServices.Users
                     return;
                 }
 
-                await userRepository.AdicionarAsync(user);
+                await userRepository.AddAsync(user);
 
                 await _unitOfWork.CommitAsync();
             }

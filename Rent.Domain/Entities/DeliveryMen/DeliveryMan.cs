@@ -1,9 +1,4 @@
 ﻿using Rent.Domain.Abstractions.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rent.Domain.Entities.DeliveryMen
 {
@@ -71,8 +66,46 @@ namespace Rent.Domain.Entities.DeliveryMen
 
         private bool IsValidCNPJ(string cnpj)
         {
-            return true;   
+            int[] firstMultiplier = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] secondMultiplier = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            cnpj = cnpj.Trim().Replace(".", "").Replace("-", "").Replace("/", "");
+
+            if (cnpj.Length != 14)
+                return false;
+
+            string tempCnpj = cnpj.Substring(0, 12);
+            int sum = 0;
+
+            for (int i = 0; i < 12; i++)
+                sum += int.Parse(tempCnpj[i].ToString()) * firstMultiplier[i];
+
+            int remainder = (sum % 11);
+
+            if (remainder < 2)
+                remainder = 0;
+            else
+                remainder = 11 - remainder;
+
+            string digit = remainder.ToString();
+            tempCnpj = tempCnpj + digit;
+            sum = 0;
+
+            for (int i = 0; i < 13; i++)
+                sum += int.Parse(tempCnpj[i].ToString()) * secondMultiplier[i];
+
+            remainder = (sum % 11);
+
+            if (remainder < 2)
+                remainder = 0;
+            else
+                remainder = 11 - remainder;
+
+            digit = digit + remainder.ToString();
+
+            return cnpj.EndsWith(digit);
         }
+
 
         public bool CanRent()
         {

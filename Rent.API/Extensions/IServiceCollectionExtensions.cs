@@ -11,7 +11,7 @@ namespace Rent.API.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerConfig();
 
-            services.AddInjencaoDeDependenciaAPIIoC(configuration);
+            services.AddAPIDependencyInjectionIoC(configuration);
             services.AddAutoMapperConfig();
 
             return services;
