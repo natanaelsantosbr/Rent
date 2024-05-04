@@ -1,10 +1,11 @@
-﻿using Rent.Application.Abstractions;
+﻿using MediatR;
+using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
 using Rent.Application.DTOs.Motorcycles;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
-using Rent.Domain.MessagePublishers;
+using Rent.Domain.Events.Motorycles;
 
 namespace Rent.Application.AppServices.Motorcycles
 {
@@ -12,13 +13,13 @@ namespace Rent.Application.AppServices.Motorcycles
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly User _user;
-        private readonly IMessagePublisher _messagePublisher;
+        private readonly IMediator _mediator;
 
-        public RegisterMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMessagePublisher messagePublisher)
+        public RegisterMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMediator mediator)
         {
             _unitOfWork = unitOfWork;
             _user = user;
-            _messagePublisher = messagePublisher;
+            _mediator = mediator;
         }
 
         public async Task RegisterAsync(AddMotorcycleDTO dto)
@@ -55,10 +56,10 @@ namespace Rent.Application.AppServices.Motorcycles
 
             await _unitOfWork.CommitAsync();
 
-            await _messagePublisher.PublishAsync("motorcycle_registered", motorcycle);
+            await _mediator.Publish(new MotorcycleRegisteredNotification(motorcycle));
 
             if (motorcycle.Year == 2024)
-                await _messagePublisher.PublishAsync("motorcycle_2024_registered", motorcycle);
+                await _mediator.Publish(new Motorcycle2024RegisteredNotification(motorcycle));
         }
     }
 }
