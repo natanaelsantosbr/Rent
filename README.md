@@ -36,6 +36,7 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 - Solid
 - IoC
 - Identity
+- MediatR
 
 ## Contribuição
 
