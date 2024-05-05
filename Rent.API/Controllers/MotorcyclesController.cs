@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Rent.API.Abstractions.Controllers;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
 using Rent.Application.DTOs.Motorcycles;
 
 namespace Rent.API.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class MotorcyclesController : RentController
     {
         private readonly IRegisterMotorcycleAppService _addMotorcycleAppService;
@@ -34,7 +36,7 @@ namespace Rent.API.Controllers
 
         [HttpGet()]
         public IActionResult GetMotorcyclesAsync([FromQuery] string? licensePlate)
-        {
+         {
             var result = _getMotorcycleAppService.GetMotorcycleByLicensePlateAsync(licensePlate);
 
             if (_getMotorcycleAppService.Invalid)

@@ -32,7 +32,7 @@ namespace Rent.API.Controllers
         }
 
         [HttpPost("register-admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterAdminDTO dto)
         {
             await _registerUserAdminAppService.RegisterAsync(dto);
