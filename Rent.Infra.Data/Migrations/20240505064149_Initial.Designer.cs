@@ -12,7 +12,7 @@ using Rent.Infra.Data.Context;
 namespace Rent.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240503182427_Initial")]
+    [Migration("20240505064149_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -54,17 +54,17 @@ namespace Rent.Infra.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6affca0c-551c-4d00-a3a1-d1641d09f5e6",
-                            ConcurrencyStamp = "82612521-ae33-41f3-9102-54df447665bb",
-                            Name = "admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
                             Id = "e204963b-3484-4bba-b83a-9261694ad9e1",
                             ConcurrencyStamp = "d0560a5f-8c03-40b5-be69-8bcd9aee7dd0",
                             Name = "deliveryman",
                             NormalizedName = "DELIVERYMAN"
+                        },
+                        new
+                        {
+                            Id = "49cd13d0-9a2a-4115-bc48-f9f3ba5be1f7",
+                            ConcurrencyStamp = "49cd13d0-9a2a-4115-bc48-f9f3ba5be1f7",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -153,6 +153,13 @@ namespace Rent.Infra.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "d146dfe8-b61b-4d82-944f-4f9b5125ef60",
+                            RoleId = "49cd13d0-9a2a-4115-bc48-f9f3ba5be1f7"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -185,33 +192,38 @@ namespace Rent.Infra.Data.Migrations
 
                     b.Property<string>("CNH")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("CNHImagePath")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
 
-                    b.Property<DateTime>("DataDoCadastro")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("TypeCNH")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DeliveryMen", (string)null);
+                    b.ToTable("DeliveryMen");
                 });
 
             modelBuilder.Entity("Rent.Domain.Entities.Events.Event", b =>
@@ -221,9 +233,6 @@ namespace Rent.Infra.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataDoCadastro")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
@@ -241,14 +250,14 @@ namespace Rent.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("DailyRate")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("DataDoCadastro")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("DeliveryManId")
                         .HasColumnType("uniqueidentifier");
@@ -285,16 +294,18 @@ namespace Rent.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DataDoCadastro")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LicensePlate")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Model")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -313,7 +324,7 @@ namespace Rent.Infra.Data.Migrations
                     b.Property<bool>("Admin")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("DataDoCadastro")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("DeliveryMan")
@@ -324,11 +335,13 @@ namespace Rent.Infra.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<Guid>("UserExternalId")
                         .HasColumnType("uniqueidentifier");
@@ -336,6 +349,18 @@ namespace Rent.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8e9dbcc5-d28b-40d6-a6f4-d8840958e039"),
+                            Admin = true,
+                            CreatedAt = new DateTime(2024, 5, 5, 3, 41, 49, 239, DateTimeKind.Local).AddTicks(4480),
+                            DeliveryMan = false,
+                            Email = "admin@gmail.com",
+                            Name = "Admin",
+                            UserExternalId = new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60")
+                        });
                 });
 
             modelBuilder.Entity("Rent.Infra.Data.Identity.ApplicationUser", b =>
@@ -350,7 +375,7 @@ namespace Rent.Infra.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataDoCadastro")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -366,7 +391,7 @@ namespace Rent.Infra.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -408,6 +433,26 @@ namespace Rent.Infra.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d146dfe8-b61b-4d82-944f-4f9b5125ef60",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8e6397b8-6ef5-4f6a-b4d0-93f25b3adb69",
+                            CreatedAt = new DateTime(2024, 5, 5, 3, 41, 49, 202, DateTimeKind.Local).AddTicks(5627),
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            Name = "Admin",
+                            NormalizedEmail = "admin@gmail.com",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDcfaUttcvJ3pLDrf7dtjJBA8ekcxyKt8xNuuomiMtQoz5C0bZxxRduGy4K7jM7ZjA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e720d208-6b0b-4715-bc1e-17aa5d52251a",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

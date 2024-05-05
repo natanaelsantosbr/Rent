@@ -6,9 +6,9 @@ namespace Rent.Infra.Data.Identity
     {
         public ApplicationUser()
         {
-            DataDoCadastro = DateTime.Now;
+            CreatedAt = DateTime.Now;
         }
-        public string Nome { get; set; }
-        public DateTime DataDoCadastro { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

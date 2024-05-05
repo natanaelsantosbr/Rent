@@ -32,8 +32,8 @@ namespace Rent.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataDoCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -59,14 +59,14 @@ namespace Rent.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    CNPJ = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CNH = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CNH = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     TypeCNH = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CNHImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataDoCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    CNHImagePath = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,8 +79,7 @@ namespace Rent.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDoCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,7 +101,7 @@ namespace Rent.Infra.Data.Migrations
                     DailyRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsDriverEligible = table.Column<bool>(type: "bit", nullable: false),
-                    DataDoCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,10 +113,10 @@ namespace Rent.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataDoCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    LicensePlate = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,13 +128,13 @@ namespace Rent.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Admin = table.Column<bool>(type: "bit", nullable: false),
                     DeliveryMan = table.Column<bool>(type: "bit", nullable: false),
                     DeliveryManId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserExternalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataDoCadastro = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -253,9 +252,24 @@ namespace Rent.Infra.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "6affca0c-551c-4d00-a3a1-d1641d09f5e6", "82612521-ae33-41f3-9102-54df447665bb", "admin", "ADMIN" },
+                    { "49cd13d0-9a2a-4115-bc48-f9f3ba5be1f7", "49cd13d0-9a2a-4115-bc48-f9f3ba5be1f7", "admin", "ADMIN" },
                     { "e204963b-3484-4bba-b83a-9261694ad9e1", "d0560a5f-8c03-40b5-be69-8bcd9aee7dd0", "deliveryman", "DELIVERYMAN" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "d146dfe8-b61b-4d82-944f-4f9b5125ef60", 0, "8e6397b8-6ef5-4f6a-b4d0-93f25b3adb69", new DateTime(2024, 5, 5, 3, 41, 49, 202, DateTimeKind.Local).AddTicks(5627), "admin@gmail.com", true, false, null, "Admin", "admin@gmail.com", "ADMIN", "AQAAAAIAAYagAAAAEDcfaUttcvJ3pLDrf7dtjJBA8ekcxyKt8xNuuomiMtQoz5C0bZxxRduGy4K7jM7ZjA==", null, false, "e720d208-6b0b-4715-bc1e-17aa5d52251a", false, "admin" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Admin", "CreatedAt", "DeliveryMan", "DeliveryManId", "Email", "Name", "UserExternalId" },
+                values: new object[] { new Guid("8e9dbcc5-d28b-40d6-a6f4-d8840958e039"), true, new DateTime(2024, 5, 5, 3, 41, 49, 239, DateTimeKind.Local).AddTicks(4480), false, null, "admin@gmail.com", "Admin", new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60") });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "49cd13d0-9a2a-4115-bc48-f9f3ba5be1f7", "d146dfe8-b61b-4d82-944f-4f9b5125ef60" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

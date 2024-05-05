@@ -8,7 +8,12 @@ namespace Rent.Infra.Data.Mappings.DeliveryMen
     {
         public void Configure(EntityTypeBuilder<DeliveryMan> builder)
         {
-            builder.ToTable("DeliveryMen");
+            builder.Property(c => c.Name).HasMaxLength(300);
+            builder.Property(c => c.CNPJ).HasMaxLength(14);
+            builder.Property(c => c.CNH).HasMaxLength(11);
+            builder.Property(c => c.Email).HasMaxLength(300);
+            builder.Property(c => c.CNHImagePath).HasMaxLength(300);
+
             builder.Ignore(c => c.Alerts);
         }
     }

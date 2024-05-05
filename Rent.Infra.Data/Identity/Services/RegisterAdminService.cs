@@ -21,14 +21,11 @@ namespace Rent.Infra.Data.Identity.Services
             var user = new ApplicationUser
             {
                 UserName = email,
-                Nome = name,
+                Name = name,
                 Email = email
             };
 
             var result = await _userManager.CreateAsync(user, password);
-
-            if (result.Succeeded)
-                await _signInManager.SignInAsync(user, isPersistent: false);
 
             if (result.Succeeded)
             {

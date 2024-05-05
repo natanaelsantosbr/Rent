@@ -5,17 +5,26 @@ namespace Rent.Infra.Data.Identity.Services
 {
     public class AuthenticateService : IAuthenticateService
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthenticateService(SignInManager<ApplicationUser> signInManager)
+        public AuthenticateService(UserManager<ApplicationUser> userManager)
         {
-            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public async Task<bool> AuthenticateAsync(string email, string password)
         {
-            var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
-            return result.Succeeded;
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+                return false;
+
+            var isPasswordValid = await _userManager.CheckPasswordAsync(user, password);
+
+            if (!isPasswordValid)
+                return false;
+
+            return true;
         }
     }
 }
