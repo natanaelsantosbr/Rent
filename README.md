@@ -37,6 +37,7 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 - IoC
 - Identity
 - MediatR
+- Serilog
 
 ## Contribuição
 
