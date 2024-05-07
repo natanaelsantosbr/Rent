@@ -8,15 +8,15 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Rent.Infra.Data.Messaging
+namespace Rent.Infra.Data.Messaging.Publishers
 {
-    public class RabbitMQEventBus : IEventBus, IDisposable
+    public class RabbitMQPublish : IEventBus, IDisposable
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly IAppSettings _appSettings;
 
-        public RabbitMQEventBus(IAppSettings appSettings)
+        public RabbitMQPublish(IAppSettings appSettings)
         {
             _appSettings = appSettings;
 
@@ -32,9 +32,9 @@ namespace Rent.Infra.Data.Messaging
             _channel.QueueDeclare(queue: _appSettings.RabbitMq.Events.Motorcycle2024RegisteredEvent, durable: true, exclusive: false, autoDelete: false, arguments: null);
         }
 
-        public void Publish<T>(T @event) where T : class
+        public void Publish<T>(string name, T @event) where T : class
         {
-            var queueName = @event.GetType().Name;
+            var queueName = name;
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@event));
             _channel.BasicPublish(exchange: "", routingKey: queueName.ToLower(), basicProperties: null, body: body);
         }

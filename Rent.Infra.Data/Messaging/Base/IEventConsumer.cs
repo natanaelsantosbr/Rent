@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rent.Application.Events
+namespace Rent.Infra.Data.Messaging.Base
 {
-    public interface IEventBus
+    public interface IEventConsumer
     {
-        void Publish<T>(string name, T @event) where T : class;
+        void StartConsuming();
     }
 }

@@ -9,15 +9,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-infra", "02-infra", "{BA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Api", "03-Api", "{9E194015-9F86-4DBE-B4DC-36F0A8040B5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rent.Domain", "Rent.Domain\Rent.Domain.csproj", "{5C088C82-7B20-4ED5-9D32-2ACBCE2FD1D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rent.Domain", "Rent.Domain\Rent.Domain.csproj", "{5C088C82-7B20-4ED5-9D32-2ACBCE2FD1D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rent.Application", "Rent.Application\Rent.Application.csproj", "{B3F25C78-171C-4FF0-9808-B20A5C5D5402}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rent.Application", "Rent.Application\Rent.Application.csproj", "{B3F25C78-171C-4FF0-9808-B20A5C5D5402}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rent.Infra.Data", "Rent.Infra.Data\Rent.Infra.Data.csproj", "{1D6FA560-CA11-4783-ACE1-E540DFF4296D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rent.Infra.Data", "Rent.Infra.Data\Rent.Infra.Data.csproj", "{1D6FA560-CA11-4783-ACE1-E540DFF4296D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rent.Infra.IoC", "Rent.Infra.IoC\Rent.Infra.IoC.csproj", "{45F54CB3-ACA2-46A9-8F89-5890E470494C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rent.Infra.IoC", "Rent.Infra.IoC\Rent.Infra.IoC.csproj", "{45F54CB3-ACA2-46A9-8F89-5890E470494C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rent.API", "Rent.API\Rent.API.csproj", "{A9B38F63-11AA-446F-864A-EA0755E6ED82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rent.API", "Rent.API\Rent.API.csproj", "{A9B38F63-11AA-446F-864A-EA0755E6ED82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109EDA0F-C619-4946-8A4A-B859A6BF77F2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

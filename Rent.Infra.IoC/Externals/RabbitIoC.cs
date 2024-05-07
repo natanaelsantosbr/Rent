@@ -4,6 +4,7 @@ using Rent.Application.Abstractions;
 using Rent.Application.Events;
 using Rent.Domain.Abstractions.Entities;
 using Rent.Infra.Data.Messaging;
+using Rent.Infra.Data.Messaging.Publishers;
 
 namespace Rent.Infra.IoC.Externals
 {
@@ -11,7 +12,7 @@ namespace Rent.Infra.IoC.Externals
     {
         public static IServiceCollection AddRabbitIoC(this IServiceCollection services)
         {
-            services.AddSingleton<IEventBus, RabbitMQEventBus>();
+            services.AddSingleton<IEventBus, RabbitMQPublish>();
             services.AddHostedService<RabbitMQConsumerService>();
 
             return services;
