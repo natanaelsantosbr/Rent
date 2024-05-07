@@ -17,13 +17,14 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 
 ### Instalação
 
+0. Instale Erlang e RabbitMQ
 1. Clone o repositório
 2. Abra o projeto no Visual Studio
 3. Restaure os pacotes NuGet
 4. Compile e execute o projeto
-5. Acessar raiz do projeto pelo terminal PowerShell
+5. Acesse raiz do projeto pelo terminal PowerShell
    (`dotnet ef migrations add Initial --project Rent.Infra.Data --startup-project Rent.API`)
-6. Atualizar o banco de dados
+6. Atualize o banco de dados
    (`dotnet ef database update --project Rent.Infra.Data --startup-project Rent.API`)
 
 ## Tecnologias utilizadas
@@ -36,7 +37,7 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 - Solid
 - IoC
 - Identity
-- MediatR
+- RabbitMQ
 - Serilog
 
 ## Contribuição
