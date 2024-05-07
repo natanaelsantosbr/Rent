@@ -14,7 +14,7 @@ namespace Rent.Infra.IoC.Externals
 {
     public static class JWTIoC
     {
-        public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtAuthentication(this IServiceCollection services)
         {
             var appSettings = services.Get<IAppSettings>();
 

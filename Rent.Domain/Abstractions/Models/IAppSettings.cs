@@ -7,5 +7,7 @@ namespace Rent.Domain.Abstractions.Models
         public JwtConfig JWT { get; set; }
 
         public string PathImageCNH { get; set; }
+
+        public RabbitMqConfig RabbitMq { get; set; }
     }
 }

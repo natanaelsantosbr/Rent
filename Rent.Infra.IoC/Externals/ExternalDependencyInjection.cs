@@ -8,8 +8,8 @@ namespace Rent.Infra.IoC.Externals
         public static IServiceCollection AddExternalDependencyInjectionIoC(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDatabaseIoC(configuration);
-            services.AddIdentityIoC(configuration);
-            services.AddMediatRIoC(configuration);
+            services.AddIdentityIoC();
+            services.AddRabbitIoC();
 
             return services;
         }

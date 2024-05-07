@@ -6,5 +6,6 @@ namespace Rent.Domain.Models.ValueObjects.Settings
     {
         public JwtConfig JWT { get; set; }
         public string PathImageCNH { get; set; }
+        public RabbitMqConfig RabbitMq { get; set; }
     }
 }

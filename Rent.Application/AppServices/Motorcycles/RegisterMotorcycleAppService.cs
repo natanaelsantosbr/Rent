@@ -2,6 +2,7 @@
 using Rent.Application.Abstractions;
 using Rent.Application.Abstractions.AppServices.Motorcycles;
 using Rent.Application.DTOs.Motorcycles;
+using Rent.Application.Events;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.Motorcycles;
 using Rent.Domain.Entities.Users;
@@ -13,13 +14,13 @@ namespace Rent.Application.AppServices.Motorcycles
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly User _user;
-        private readonly IMediator _mediator;
+        private readonly IEventBus _eventBus;
 
-        public RegisterMotorcycleAppService(IUnitOfWork unitOfWork, User user, IMediator mediator)
+        public RegisterMotorcycleAppService(IUnitOfWork unitOfWork, User user, IEventBus eventBus)
         {
             _unitOfWork = unitOfWork;
             _user = user;
-            _mediator = mediator;
+            _eventBus = eventBus;
         }
 
         public async Task RegisterAsync(AddMotorcycleDTO dto)
@@ -56,10 +57,10 @@ namespace Rent.Application.AppServices.Motorcycles
 
             await _unitOfWork.CommitAsync();
 
-            await _mediator.Publish(new MotorcycleRegisteredNotification(motorcycle));
+            _eventBus.Publish(new MotorcycleRegisteredEvent(motorcycle));
 
             if (motorcycle.Year == 2024)
-                await _mediator.Publish(new Motorcycle2024RegisteredNotification(motorcycle));
+                _eventBus.Publish(new Motorcycle2024RegisteredEvent(motorcycle));
         }
     }
 }

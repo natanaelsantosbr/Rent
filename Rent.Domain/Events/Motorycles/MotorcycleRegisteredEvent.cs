@@ -3,11 +3,11 @@ using Rent.Domain.Entities.Motorcycles;
 
 namespace Rent.Domain.Events.Motorycles
 {
-    public class MotorcycleRegisteredNotification : INotification
+    public class MotorcycleRegisteredEvent : INotification
     {
         public Motorcycle Motorcycle { get;  }
 
-        public MotorcycleRegisteredNotification(Motorcycle motorcycle)
+        public MotorcycleRegisteredEvent(Motorcycle motorcycle)
         {
             Motorcycle = motorcycle;
         }

@@ -8,7 +8,7 @@ namespace Rent.Infra.IoC.Externals
 {
     public static class IdentityIoC
     {
-        public static IServiceCollection AddIdentityIoC(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityIoC(this IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

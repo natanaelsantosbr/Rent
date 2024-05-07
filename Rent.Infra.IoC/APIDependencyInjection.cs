@@ -16,7 +16,7 @@ namespace Rent.Infra.IoC
         {
             services.AddBusinessRuleDependencyInjectionIoC(configuration);
             services.AddExternalDependencyInjectionIoC(configuration);
-            services.AddJwtAuthentication(configuration);
+            services.AddJwtAuthentication();
             return services;
         }
     }
