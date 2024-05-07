@@ -26,7 +26,7 @@ namespace Rent.Infra.IoC.Tokens
         {
             var role = "deliveryman";
 
-            if (user.Admin)
+            if (user.IsAdmin)
                 role = "admin";
 
             var claims = new List<Claim>

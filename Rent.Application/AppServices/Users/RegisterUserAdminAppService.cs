@@ -28,7 +28,7 @@ namespace Rent.Application.AppServices.Users
                 return;
             }
 
-            if (!_user.Admin)
+            if (!_user.IsAdmin)
             {
                 Alert("Only admin users can perform this action.");
                 return;

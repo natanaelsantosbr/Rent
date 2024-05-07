@@ -29,7 +29,7 @@ namespace Rent.Application.AppServices.Motorcycles
                 return null;
             }
 
-            if (!_user.Admin)
+            if (!_user.IsAdmin)
             {
                 Alert("Only admin users can perform this action.");
                 return null;

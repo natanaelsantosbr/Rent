@@ -12,7 +12,7 @@ using Rent.Infra.Data.Context;
 namespace Rent.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240505064149_Initial")]
+    [Migration("20240507024207_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -285,6 +285,10 @@ namespace Rent.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeliveryManId");
+
+                    b.HasIndex("MotorcycleId");
+
                     b.ToTable("MotorcycleRentals", (string)null);
                 });
 
@@ -321,14 +325,8 @@ namespace Rent.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Admin")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("DeliveryMan")
-                        .HasColumnType("bit");
 
                     b.Property<Guid?>("DeliveryManId")
                         .HasColumnType("uniqueidentifier");
@@ -337,6 +335,12 @@ namespace Rent.Infra.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeliveryMan")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -348,16 +352,18 @@ namespace Rent.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeliveryManId");
+
                     b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8e9dbcc5-d28b-40d6-a6f4-d8840958e039"),
-                            Admin = true,
-                            CreatedAt = new DateTime(2024, 5, 5, 3, 41, 49, 239, DateTimeKind.Local).AddTicks(4480),
-                            DeliveryMan = false,
+                            Id = new Guid("5b5cdb68-e2bd-4830-a602-c104aeec0e6e"),
+                            CreatedAt = new DateTime(2024, 5, 6, 23, 42, 7, 627, DateTimeKind.Local).AddTicks(8113),
                             Email = "admin@gmail.com",
+                            IsAdmin = true,
+                            IsDeliveryMan = false,
                             Name = "Admin",
                             UserExternalId = new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60")
                         });
@@ -439,17 +445,17 @@ namespace Rent.Infra.Data.Migrations
                         {
                             Id = "d146dfe8-b61b-4d82-944f-4f9b5125ef60",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8e6397b8-6ef5-4f6a-b4d0-93f25b3adb69",
-                            CreatedAt = new DateTime(2024, 5, 5, 3, 41, 49, 202, DateTimeKind.Local).AddTicks(5627),
+                            ConcurrencyStamp = "54fb50a7-13ef-4fde-9e90-def87f3eaaed",
+                            CreatedAt = new DateTime(2024, 5, 6, 23, 42, 7, 587, DateTimeKind.Local).AddTicks(9806),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDcfaUttcvJ3pLDrf7dtjJBA8ekcxyKt8xNuuomiMtQoz5C0bZxxRduGy4K7jM7ZjA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGT0Yp3//El0NPUuF16W+CTPczn4CP0goccLc9FVwKmAnxnvA+1QGkn8v/kNw2SZPQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e720d208-6b0b-4715-bc1e-17aa5d52251a",
+                            SecurityStamp = "a2879e0e-f616-4c65-86e2-0c5830005ab4",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -504,6 +510,34 @@ namespace Rent.Infra.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Rent.Domain.Entities.MotorcycleRentals.MotorcycleRental", b =>
+                {
+                    b.HasOne("Rent.Domain.Entities.DeliveryMen.DeliveryMan", "DeliveryMan")
+                        .WithMany()
+                        .HasForeignKey("DeliveryManId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Rent.Domain.Entities.Motorcycles.Motorcycle", "Motorcycle")
+                        .WithMany()
+                        .HasForeignKey("MotorcycleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeliveryMan");
+
+                    b.Navigation("Motorcycle");
+                });
+
+            modelBuilder.Entity("Rent.Domain.Entities.Users.User", b =>
+                {
+                    b.HasOne("Rent.Domain.Entities.DeliveryMen.DeliveryMan", "DeliveryMan")
+                        .WithMany()
+                        .HasForeignKey("DeliveryManId");
+
+                    b.Navigation("DeliveryMan");
                 });
 #pragma warning restore 612, 618
         }

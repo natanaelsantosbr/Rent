@@ -87,28 +87,6 @@ namespace Rent.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MotorcycleRentals",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MotorcycleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DeliveryManId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpectedEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RentalPeriod = table.Column<int>(type: "int", nullable: false),
-                    DailyRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TotalCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsDriverEligible = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MotorcycleRentals", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Motorcycles",
                 columns: table => new
                 {
@@ -121,24 +99,6 @@ namespace Rent.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Motorcycles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Admin = table.Column<bool>(type: "bit", nullable: false),
-                    DeliveryMan = table.Column<bool>(type: "bit", nullable: false),
-                    DeliveryManId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UserExternalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,6 +207,63 @@ namespace Rent.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeliveryMan = table.Column<bool>(type: "bit", nullable: false),
+                    DeliveryManId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserExternalId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_DeliveryMen_DeliveryManId",
+                        column: x => x.DeliveryManId,
+                        principalTable: "DeliveryMen",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MotorcycleRentals",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MotorcycleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DeliveryManId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpectedEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RentalPeriod = table.Column<int>(type: "int", nullable: false),
+                    DailyRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsDriverEligible = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MotorcycleRentals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MotorcycleRentals_DeliveryMen_DeliveryManId",
+                        column: x => x.DeliveryManId,
+                        principalTable: "DeliveryMen",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MotorcycleRentals_Motorcycles_MotorcycleId",
+                        column: x => x.MotorcycleId,
+                        principalTable: "Motorcycles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -259,12 +276,12 @@ namespace Rent.Infra.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "d146dfe8-b61b-4d82-944f-4f9b5125ef60", 0, "8e6397b8-6ef5-4f6a-b4d0-93f25b3adb69", new DateTime(2024, 5, 5, 3, 41, 49, 202, DateTimeKind.Local).AddTicks(5627), "admin@gmail.com", true, false, null, "Admin", "admin@gmail.com", "ADMIN", "AQAAAAIAAYagAAAAEDcfaUttcvJ3pLDrf7dtjJBA8ekcxyKt8xNuuomiMtQoz5C0bZxxRduGy4K7jM7ZjA==", null, false, "e720d208-6b0b-4715-bc1e-17aa5d52251a", false, "admin" });
+                values: new object[] { "d146dfe8-b61b-4d82-944f-4f9b5125ef60", 0, "54fb50a7-13ef-4fde-9e90-def87f3eaaed", new DateTime(2024, 5, 6, 23, 42, 7, 587, DateTimeKind.Local).AddTicks(9806), "admin@gmail.com", true, false, null, "Admin", "admin@gmail.com", "ADMIN", "AQAAAAIAAYagAAAAEGT0Yp3//El0NPUuF16W+CTPczn4CP0goccLc9FVwKmAnxnvA+1QGkn8v/kNw2SZPQ==", null, false, "a2879e0e-f616-4c65-86e2-0c5830005ab4", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Admin", "CreatedAt", "DeliveryMan", "DeliveryManId", "Email", "Name", "UserExternalId" },
-                values: new object[] { new Guid("8e9dbcc5-d28b-40d6-a6f4-d8840958e039"), true, new DateTime(2024, 5, 5, 3, 41, 49, 239, DateTimeKind.Local).AddTicks(4480), false, null, "admin@gmail.com", "Admin", new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60") });
+                columns: new[] { "Id", "CreatedAt", "DeliveryManId", "Email", "IsAdmin", "IsDeliveryMan", "Name", "UserExternalId" },
+                values: new object[] { new Guid("5b5cdb68-e2bd-4830-a602-c104aeec0e6e"), new DateTime(2024, 5, 6, 23, 42, 7, 627, DateTimeKind.Local).AddTicks(8113), null, "admin@gmail.com", true, false, "Admin", new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60") });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -309,6 +326,21 @@ namespace Rent.Infra.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MotorcycleRentals_DeliveryManId",
+                table: "MotorcycleRentals",
+                column: "DeliveryManId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MotorcycleRentals_MotorcycleId",
+                table: "MotorcycleRentals",
+                column: "MotorcycleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_DeliveryManId",
+                table: "Users",
+                column: "DeliveryManId");
         }
 
         /// <inheritdoc />
@@ -330,16 +362,10 @@ namespace Rent.Infra.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "DeliveryMen");
-
-            migrationBuilder.DropTable(
                 name: "Events");
 
             migrationBuilder.DropTable(
                 name: "MotorcycleRentals");
-
-            migrationBuilder.DropTable(
-                name: "Motorcycles");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -349,6 +375,12 @@ namespace Rent.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Motorcycles");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryMen");
         }
     }
 }

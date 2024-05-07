@@ -1,4 +1,6 @@
 ﻿using Rent.Domain.Abstractions.Entities;
+using Rent.Domain.Entities.DeliveryMen;
+using Rent.Domain.Entities.Motorcycles;
 
 namespace Rent.Domain.Entities.MotorcycleRentals
 {
@@ -7,7 +9,9 @@ namespace Rent.Domain.Entities.MotorcycleRentals
         protected MotorcycleRental() { }
 
         public Guid MotorcycleId { get; private set; }
-        public Guid DeliveryManId { get; private set; }    
+        public Motorcycle Motorcycle { get; private set; }
+        public Guid DeliveryManId { get; private set; }
+        public DeliveryMan DeliveryMan { get; private set; }
         public DateTime CreationDate { get; private set; }
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }

@@ -25,7 +25,7 @@ namespace Rent.Application.Abstractions.AppServices.MotorycleRentals
                 return;
             }
 
-            if (_user.Admin || !_user.DeliveryManId.HasValue)
+            if (_user.IsAdmin || !_user.DeliveryManId.HasValue)
             {
                 Alert("Only delivery man users can perform this action.");
                 return;

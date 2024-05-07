@@ -1,4 +1,5 @@
 ﻿using Rent.Domain.Abstractions.Entities;
+using Rent.Domain.Entities.DeliveryMen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace Rent.Domain.Entities.Users
         {
             Name = name;
             Email = email;
-            Admin = true;
-            DeliveryMan = false;
+            IsAdmin = true;
+            IsDeliveryMan = false;
             UserExternalId = userExternalId;
         }
 
@@ -24,17 +25,18 @@ namespace Rent.Domain.Entities.Users
         {
             Name = name;
             Email = email;
-            Admin = false;
-            DeliveryMan = true;
+            IsAdmin = false;
+            IsDeliveryMan = true;
             UserExternalId = userExternalId;
             DeliveryManId = deliveryManId;
         }
 
         public string Name { get; private set; }
         public string Email { get; private set; }
-        public bool Admin { get; private set; }
-        public bool DeliveryMan { get; private set; }
+        public bool IsAdmin { get; private set; }
+        public bool IsDeliveryMan { get; private set; }
         public Guid? DeliveryManId { get; private set; }
+        public DeliveryMan? DeliveryMan { get; private set; }
         public Guid UserExternalId { get; private set; }
     }
 }
