@@ -14,8 +14,8 @@ namespace Rent.Infra.Data.Messaging.Consumers.Motorycles
 {
     public class Motorcycle2024RegisteredConsumer : EventConsumerBase
     {
-        public Motorcycle2024RegisteredConsumer(IModel channel, IServiceScopeFactory scopeFactory, ILogger logger, string nameEvent)
-            : base(channel, scopeFactory, logger, nameEvent)
+        public Motorcycle2024RegisteredConsumer(IModel channel, IServiceScopeFactory scopeFactory, ILogger logger, string nameEvent, IAppSettings appSettings)
+            : base(channel, scopeFactory, logger, nameEvent, appSettings)
         {
         }
 

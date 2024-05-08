@@ -61,11 +61,15 @@ namespace Rent.Infra.Data.Messaging
                 return Task.CompletedTask;
             }
 
-            var consumer1 = new MotorcycleRegisteredConsumer(_channel, _scopeFactory, _logger, _appSettings.RabbitMq.Events.MotorcycleRegisteredEvent);
-            var consumer2 = new Motorcycle2024RegisteredConsumer(_channel, _scopeFactory, _logger, _appSettings.RabbitMq.Events.Motorcycle2024RegisteredEvent);
+            var events = _appSettings.RabbitMq.Events;
+
+            var consumer1 = new MotorcycleRegisteredConsumer(_channel, _scopeFactory, _logger, events.MotorcycleRegisteredEvent, _appSettings);
+            var consumer2 = new Motorcycle2024RegisteredConsumer(_channel, _scopeFactory, _logger, events.Motorcycle2024RegisteredEvent, _appSettings);
+            var consumer3 = new CNHImageUploadConsumer(_channel, _scopeFactory, _logger, events.CNHImageEvent, _appSettings);
 
             consumer1.StartConsuming();
             consumer2.StartConsuming();
+            consumer3.StartConsuming();
 
             return Task.CompletedTask;
         }

@@ -41,6 +41,7 @@ namespace Rent.Infra.Data.Messaging.Publishers
 
                 _channel.QueueDeclare(queue: _appSettings.RabbitMq.Events.MotorcycleRegisteredEvent, durable: true, exclusive: false, autoDelete: false, arguments: null);
                 _channel.QueueDeclare(queue: _appSettings.RabbitMq.Events.Motorcycle2024RegisteredEvent, durable: true, exclusive: false, autoDelete: false, arguments: null);
+                _channel.QueueDeclare(queue: _appSettings.RabbitMq.Events.CNHImageEvent, durable: true, exclusive: false, autoDelete: false, arguments: null);
             }
             catch (Exception ex)
             {

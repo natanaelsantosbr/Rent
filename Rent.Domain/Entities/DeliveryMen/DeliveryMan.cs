@@ -12,17 +12,18 @@ namespace Rent.Domain.Entities.DeliveryMen
         public string CNH { get; private set; }
         public CNHTypeEnum TypeCNH { get; private set; }
         public string Email { get; private set; }
-        public string CNHImagePath { get; private set; }
+        public string? CNHImagePath { get; private set; }
 
-        public DeliveryMan(string name, string cnpj, DateTime birthDate, string cnh, CNHTypeEnum typeCNH, string email, string cnhImagePath)
+        public DeliveryMan(string name, string cnpj, DateTime birthDate, string cnh, CNHTypeEnum typeCNH, string email)
         {
+            cnpj = cnpj.Trim().Replace(".", "").Replace("-", "").Replace("/", "");
+
             Name = name;
             CNPJ = cnpj;
             BirthDate = birthDate;
             CNH = cnh;
             TypeCNH = typeCNH;
             Email = email;
-            CNHImagePath = cnhImagePath;
 
             Validate();
         }

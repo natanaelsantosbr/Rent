@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using Rent.Domain.Abstractions.Models;
+using Rent.Domain.Models.ValueObjects.Settings;
 
 namespace Rent.Infra.Data.Messaging.Base
 {
@@ -10,13 +12,15 @@ namespace Rent.Infra.Data.Messaging.Base
         protected readonly IServiceScopeFactory _scopeFactory;
         protected readonly ILogger _logger;
         protected readonly string _queueName;
+        protected readonly IAppSettings _appSettings;
 
-        public EventConsumerBase(IModel channel, IServiceScopeFactory scopeFactory, ILogger logger, string queueName)
+        public EventConsumerBase(IModel channel, IServiceScopeFactory scopeFactory, ILogger logger, string queueName, IAppSettings appSettings)
         {
             _channel = channel;
             _scopeFactory = scopeFactory;
             _logger = logger;
             _queueName = queueName;
+            _appSettings = appSettings;
             DeclareQueue();
         }
 

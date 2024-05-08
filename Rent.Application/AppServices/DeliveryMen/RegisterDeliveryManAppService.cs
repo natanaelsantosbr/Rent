@@ -3,9 +3,11 @@ using Rent.Application.Abstractions.AppServices.DeliveryMen;
 using Rent.Application.Abstractions.AppServices.Users;
 using Rent.Application.DTOs.DeliveryMen;
 using Rent.Application.DTOs.Users;
+using Rent.Application.Events;
 using Rent.Domain.Abstractions.Models;
 using Rent.Domain.Abstractions.UnitsOfWork;
 using Rent.Domain.Entities.DeliveryMen;
+using Rent.Domain.Events.DeliveryMan;
 
 namespace Rent.Application.AppServices.DeliveryMen
 {
@@ -14,12 +16,14 @@ namespace Rent.Application.AppServices.DeliveryMen
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRegisterUserDeliveryManAppService _registerUserDeliveryManAppService;
         private readonly IAppSettings _appSettings;
+        private readonly IEventBus _eventBus;
 
-        public RegisterDeliveryManAppService(IUnitOfWork unitOfWork, IRegisterUserDeliveryManAppService registerUserDeliveryManAppService, IAppSettings appSettings)
+        public RegisterDeliveryManAppService(IUnitOfWork unitOfWork, IRegisterUserDeliveryManAppService registerUserDeliveryManAppService, IAppSettings appSettings, IEventBus eventBus)
         {
             _unitOfWork = unitOfWork;
             _registerUserDeliveryManAppService = registerUserDeliveryManAppService;
             _appSettings = appSettings;
+            _eventBus = eventBus;
         }
 
         public async Task<bool> RegisterDeliveryManAsync(RegisterDeliveryManDTO dto)
@@ -41,9 +45,8 @@ namespace Rent.Application.AppServices.DeliveryMen
                 return false;
             }
 
-            var cnhImagePath = await SaveCNHImageAsync(dto.ImageCNH, dto.CNH);
 
-            var deliveryMan = new DeliveryMan(dto.Name, dto.CNPJ, dto.BirthDate, dto.CNH, dto.TypeCNH, dto.Email, cnhImagePath);
+            var deliveryMan = new DeliveryMan(dto.Name, dto.CNPJ, dto.BirthDate, dto.CNH, dto.TypeCNH, dto.Email);
 
             if (deliveryMan.Invalid)
             {
@@ -62,6 +65,8 @@ namespace Rent.Application.AppServices.DeliveryMen
             }
 
             await _unitOfWork.CommitAsync();
+
+            _eventBus.Publish(_appSettings.RabbitMq.Events.CNHImageEvent, new CNHImageUploadEvent(deliveryMan.Id, dto.ImageCNH));
 
             return true;
         }
