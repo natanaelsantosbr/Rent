@@ -11,6 +11,11 @@ This is a delivery service project that allows the registration of couriers.
 - .NET 8.0 or higher
 - Visual Studio 2022 or higher
 
+## How to Use
+- Admin
+   - Email: `admin@gmail.com`
+   - Password: `Admin@10`
+
 ## Installation
 
 - Install Erlang and RabbitMQ
@@ -60,6 +65,11 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 - Verificação de CNPJ e CNH únicos
 - Upload de imagem da CNH
 
+## Como usar
+- Admin
+   - Email: `admin@gmail.com`
+   - Password: `Admin@10`
+   - 
 ### Pré-requisitos
 
 - .NET 8.0 ou superior
