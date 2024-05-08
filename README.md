@@ -17,11 +17,11 @@ This is a delivery service project that allows the registration of couriers.
 - Clone the repository
 - Open the project in Visual Studio
 - Restore NuGet packages
-- Build and run the project
 - Access the project root via the PowerShell terminal
 (`dotnet ef migrations add Initial --project Rent.Infra.Data --startup-project Rent.API`)
 - Update the database
 (`dotnet ef database update --project Rent.Infra.Data --startup-project Rent.API`)
+- Build and run the project
 
 ## Technologies Used
 - .NET 8.0
@@ -71,11 +71,11 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 1. Clone o repositório
 2. Abra o projeto no Visual Studio
 3. Restaure os pacotes NuGet
-4. Compile e execute o projeto
 5. Acesse raiz do projeto pelo terminal PowerShell
    (`dotnet ef migrations add Initial --project Rent.Infra.Data --startup-project Rent.API`)
 6. Atualize o banco de dados
    (`dotnet ef database update --project Rent.Infra.Data --startup-project Rent.API`)
+4. Compile e execute o projeto
 
 ## Tecnologias utilizadas
 
