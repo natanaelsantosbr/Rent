@@ -1,5 +1,57 @@
 # Rent Delivery Service
 
+This is a delivery service project that allows the registration of couriers.
+
+## Features
+- Courier registration
+- Verification of unique CNPJ and CNH
+- CNH image upload
+
+## Prerequisites
+- .NET 8.0 or higher
+- Visual Studio 2022 or higher
+
+## Installation
+
+- Install Erlang and RabbitMQ
+- Clone the repository
+- Open the project in Visual Studio
+- Restore NuGet packages
+- Build and run the project
+- Access the project root via the PowerShell terminal
+(`dotnet ef migrations add Initial --project Rent.Infra.Data --startup-project Rent.API`)
+- Update the database
+(`dotnet ef database update --project Rent.Infra.Data --startup-project Rent.API`)
+
+## Technologies Used
+- .NET 8.0
+- Entity Framework Core
+- SQL Server
+- ASP.NET Core Web API
+- Clean Architecture
+- SOLID principles
+- IoC (Inversion of Control)
+- Identity
+- RabbitMQ
+- Serilog
+
+## Contributing
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will be greatly appreciated.
+
+- Fork the project
+- Create your Feature Branch (git checkout -b feature/AmazingFeature)
+- Commit your changes (git commit -m 'Add some AmazingFeature')
+- Push to the Branch (git push origin feature/AmazingFeature)
+- Open a Pull Request
+
+## Contact
+- Natanael - natanaelsantosbr@gmail.com
+
+------------------------------------------
+Portuguese
+
+# Serviço de entrega de aluguel de motos
+
 Este é um projeto de serviço de entrega que permite o registro de entregadores.
 
 ## Funcionalidades
@@ -7,8 +59,6 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 - Registro de entregadores
 - Verificação de CNPJ e CNH únicos
 - Upload de imagem da CNH
-
-## Como usar
 
 ### Pré-requisitos
 
