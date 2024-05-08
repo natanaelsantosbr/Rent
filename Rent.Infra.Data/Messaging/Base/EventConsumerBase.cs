@@ -22,6 +22,12 @@ namespace Rent.Infra.Data.Messaging.Base
 
         private void DeclareQueue()
         {
+            if (_channel == null)
+            {
+                _logger.LogError($"Failed to connect to RabbitMQ create queue");
+                return;
+            }
+
             _channel.QueueDeclare(queue: _queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
             _logger.LogInformation($"[{_queueName}] ok");
         }

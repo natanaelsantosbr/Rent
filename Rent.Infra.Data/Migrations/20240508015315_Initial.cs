@@ -87,6 +87,22 @@ namespace Rent.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EventsFailed",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QueueName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JsonPayload = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ErrorMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StackTrace = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventsFailed", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Motorcycles",
                 columns: table => new
                 {
@@ -276,12 +292,12 @@ namespace Rent.Infra.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "d146dfe8-b61b-4d82-944f-4f9b5125ef60", 0, "54fb50a7-13ef-4fde-9e90-def87f3eaaed", new DateTime(2024, 5, 6, 23, 42, 7, 587, DateTimeKind.Local).AddTicks(9806), "admin@gmail.com", true, false, null, "Admin", "admin@gmail.com", "ADMIN", "AQAAAAIAAYagAAAAEGT0Yp3//El0NPUuF16W+CTPczn4CP0goccLc9FVwKmAnxnvA+1QGkn8v/kNw2SZPQ==", null, false, "a2879e0e-f616-4c65-86e2-0c5830005ab4", false, "admin" });
+                values: new object[] { "d146dfe8-b61b-4d82-944f-4f9b5125ef60", 0, "b3d29112-0fc6-4746-b8e7-7ad27e386317", new DateTime(2024, 5, 7, 22, 53, 14, 813, DateTimeKind.Local).AddTicks(3019), "admin@gmail.com", true, false, null, "Admin", "admin@gmail.com", "ADMIN", "AQAAAAIAAYagAAAAEBg+8GXtsOx+f/Op7mQcS8+ahReyk9FhihKpTLIuyNDH1zVa9Bw3dgg0PgjCg7XoEA==", null, false, "7f71ffbb-1c5f-4b66-b89a-d870134f0c26", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreatedAt", "DeliveryManId", "Email", "IsAdmin", "IsDeliveryMan", "Name", "UserExternalId" },
-                values: new object[] { new Guid("5b5cdb68-e2bd-4830-a602-c104aeec0e6e"), new DateTime(2024, 5, 6, 23, 42, 7, 627, DateTimeKind.Local).AddTicks(8113), null, "admin@gmail.com", true, false, "Admin", new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60") });
+                values: new object[] { new Guid("f3219b39-ee18-40dc-9e53-5fe2b19400b7"), new DateTime(2024, 5, 7, 22, 53, 14, 852, DateTimeKind.Local).AddTicks(47), null, "admin@gmail.com", true, false, "Admin", new Guid("d146dfe8-b61b-4d82-944f-4f9b5125ef60") });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -363,6 +379,9 @@ namespace Rent.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "EventsFailed");
 
             migrationBuilder.DropTable(
                 name: "MotorcycleRentals");

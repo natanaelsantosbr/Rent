@@ -24,6 +24,7 @@ namespace Rent.Infra.Data.Context
         public DbSet<MotorcycleRental> MotorcycleRentals { get; set; }
         public DbSet<Motorcycle> Motorcycles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<EventFailed> EventsFailed { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -35,19 +35,32 @@ namespace Rent.Infra.Data.Messaging
             _scopeFactory = scopeFactory;
             _logger = logger;
 
-            var factory = new ConnectionFactory()
+            try
             {
-                HostName = appSettings.RabbitMq.HostName,
-                Port = appSettings.RabbitMq.Port,
-                UserName = appSettings.RabbitMq.UserName,
-                Password = appSettings.RabbitMq.Password
-            };
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
+                var factory = new ConnectionFactory()
+                {
+                    HostName = appSettings.RabbitMq.HostName,
+                    Port = appSettings.RabbitMq.Port,
+                    UserName = appSettings.RabbitMq.UserName,
+                    Password = appSettings.RabbitMq.Password
+                };
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to connect to RabbitMQ: {ex.Message}");
+            }
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            if(_channel == null)
+            {
+                _logger.LogError("Failed to connect to RabbitMQ to consummer");
+                return Task.CompletedTask;
+            }
+
             var consumer1 = new MotorcycleRegisteredConsumer(_channel, _scopeFactory, _logger, _appSettings.RabbitMq.Events.MotorcycleRegisteredEvent);
             var consumer2 = new Motorcycle2024RegisteredConsumer(_channel, _scopeFactory, _logger, _appSettings.RabbitMq.Events.Motorcycle2024RegisteredEvent);
 

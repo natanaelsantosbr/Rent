@@ -12,7 +12,7 @@ using Rent.Infra.Data.Context;
 namespace Rent.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240507024207_Initial")]
+    [Migration("20240508015315_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -244,6 +244,35 @@ namespace Rent.Infra.Data.Migrations
                     b.ToTable("Events", (string)null);
                 });
 
+            modelBuilder.Entity("Rent.Domain.Entities.Events.EventFailed", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ErrorMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JsonPayload")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QueueName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventsFailed", (string)null);
+                });
+
             modelBuilder.Entity("Rent.Domain.Entities.MotorcycleRentals.MotorcycleRental", b =>
                 {
                     b.Property<Guid>("Id")
@@ -359,8 +388,8 @@ namespace Rent.Infra.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5b5cdb68-e2bd-4830-a602-c104aeec0e6e"),
-                            CreatedAt = new DateTime(2024, 5, 6, 23, 42, 7, 627, DateTimeKind.Local).AddTicks(8113),
+                            Id = new Guid("f3219b39-ee18-40dc-9e53-5fe2b19400b7"),
+                            CreatedAt = new DateTime(2024, 5, 7, 22, 53, 14, 852, DateTimeKind.Local).AddTicks(47),
                             Email = "admin@gmail.com",
                             IsAdmin = true,
                             IsDeliveryMan = false,
@@ -445,17 +474,17 @@ namespace Rent.Infra.Data.Migrations
                         {
                             Id = "d146dfe8-b61b-4d82-944f-4f9b5125ef60",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "54fb50a7-13ef-4fde-9e90-def87f3eaaed",
-                            CreatedAt = new DateTime(2024, 5, 6, 23, 42, 7, 587, DateTimeKind.Local).AddTicks(9806),
+                            ConcurrencyStamp = "b3d29112-0fc6-4746-b8e7-7ad27e386317",
+                            CreatedAt = new DateTime(2024, 5, 7, 22, 53, 14, 813, DateTimeKind.Local).AddTicks(3019),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Admin",
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGT0Yp3//El0NPUuF16W+CTPczn4CP0goccLc9FVwKmAnxnvA+1QGkn8v/kNw2SZPQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBg+8GXtsOx+f/Op7mQcS8+ahReyk9FhihKpTLIuyNDH1zVa9Bw3dgg0PgjCg7XoEA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a2879e0e-f616-4c65-86e2-0c5830005ab4",
+                            SecurityStamp = "7f71ffbb-1c5f-4b66-b89a-d870134f0c26",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
