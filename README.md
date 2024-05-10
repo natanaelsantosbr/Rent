@@ -67,7 +67,6 @@ Este é um projeto de serviço de entrega que permite o registro de entregadores
 - Admin
    - Email: `admin@gmail.com`
    - Password: `Admin@10`
-   - 
 ### Pré-requisitos
 
 - .NET 8.0 ou superior
