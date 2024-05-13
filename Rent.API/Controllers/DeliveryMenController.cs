@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Rent.API.Abstractions.Controllers;
 using Rent.API.DTOs;
+using Rent.API.Extensions;
 using Rent.Application.Abstractions.AppServices.DeliveryMen;
 using Rent.Application.DTOs.DeliveryMen;
 
@@ -30,7 +31,7 @@ namespace Rent.API.Controllers
                 model.BirthDate,
                 model.CNH,
                 model.TypeCNH,
-                model.ConvertFormFileToByteArray(model.File));
+                model.File.ToByteArray());
 
             var result = await _registerDeliveryManAppService.RegisterDeliveryManAsync(dto);
 
@@ -50,7 +51,7 @@ namespace Rent.API.Controllers
 
             try
             {
-                await _updateCNHAppService.UpdateCNHAsync(dto.ConvertFormFileToByteArray(dto.File));
+                await _updateCNHAppService.UpdateCNHAsync(dto.File.ToByteArray());
 
                 if (_updateCNHAppService.Invalid)
                     return BadRequest(_updateCNHAppService.Alerts);
