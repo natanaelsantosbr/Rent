@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Rent.API.Abstractions.Controllers;
 using Rent.API.DTOs;
 using Rent.Application.Abstractions.AppServices.Accounts;
 using Rent.Application.Abstractions.AppServices.Users;
@@ -8,7 +7,10 @@ using Rent.Application.DTOs.Users;
 
 namespace Rent.API.Controllers
 {
-    public class AccountsController : RentController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
+    public class AccountsController : ControllerBase
     {
         private readonly IRegisterUserAdminAppService _registerUserAdminAppService;
         private readonly IAuthenticateAppService _authenticateAppService;

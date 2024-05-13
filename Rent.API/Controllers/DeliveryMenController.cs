@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Rent.API.Abstractions.Controllers;
 using Rent.API.DTOs;
 using Rent.API.Extensions;
 using Rent.Application.Abstractions.AppServices.DeliveryMen;
@@ -8,7 +7,10 @@ using Rent.Application.DTOs.DeliveryMen;
 
 namespace Rent.API.Controllers
 {
-    public class DeliveryMenController : RentController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
+    public class DeliveryMenController : ControllerBase
     {
         private readonly IRegisterDeliveryManAppService _registerDeliveryManAppService;
         private readonly IUpdateCNHAppService _updateCNHAppService;
