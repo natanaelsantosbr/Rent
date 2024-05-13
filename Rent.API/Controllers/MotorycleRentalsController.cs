@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Rent.API.Abstractions.Controllers;
 using Rent.Application.Abstractions.AppServices.MotorycleRentals;
 using Rent.Application.DTOs.MotorycleRentals;
 
 namespace Rent.API.Controllers
 {
+    [Authorize(Roles = "deliveryman,admin")]
     public class MotorycleRentalsController : RentController
     {
         private readonly ICalculateReturnCostAppService _calculateReturnCostAppService;

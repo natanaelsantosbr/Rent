@@ -42,6 +42,7 @@ namespace Rent.API.Controllers
         }
 
         [HttpPut("{deliveryMenId}/update-cnh")]
+        [Authorize(Roles = "deliveryman")]
         public async Task<IActionResult> UpdateCNHAsync([FromRoute] Guid deliveryMenId, [FromForm] CreateFileDTO dto)
         {
             if (dto == null || dto.File.Length == 0)
